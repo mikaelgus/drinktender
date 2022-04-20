@@ -31,7 +31,7 @@ const Nav = () => {
       setUser(userData);
     } catch (err) {
       setUser(null);
-      navigate('/');
+      navigate('/home');
     }
   };
 
@@ -58,7 +58,7 @@ const Nav = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-            MyApp
+            Drinktender
           </Typography>
           <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
             {user ? 'Logout' : 'Login'}
