@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {useLogin} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
+import {LogoButton} from './LogoTextButton';
 
 const LoginForm = () => {
   // eslint-disable-next-line no-unused-vars
@@ -31,9 +32,10 @@ const LoginForm = () => {
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);
   console.log(inputs);
   return (
-    <Grid container>
+    <Grid container justifyContent="center">
+      <LogoButton />
       <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
+        <Typography component="h4" variant="h5" gutterBottom>
           Login
         </Typography>
       </Grid>
