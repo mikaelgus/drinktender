@@ -2,12 +2,13 @@
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
-import {Grid} from '@mui/material';
+import {Grid, Link} from '@mui/material';
 import {Typography} from '@mui/material';
 import {Button} from '@mui/material';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
 import {useEffect} from 'react';
+import {LogoButton} from './LogoTextButton';
 
 const RegisterForm = ({setToggle}) => {
   const alkuarvot = {
@@ -79,17 +80,20 @@ const RegisterForm = ({setToggle}) => {
   }, [inputs]);
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Typography component="h1" variant="h2" gutterBottom>
+    <Grid container justifyContent="center">
+      <LogoButton />
+      <Grid textAlign="center" item xs={10}>
+        <Typography component="h5" variant="h5" mt={1}>
           Register
         </Typography>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         <ValidatorForm onSubmit={handleSubmit}>
           <TextValidator
             fullWidth
+            margin="normal"
+            size="small"
             placeholder="username"
             label="username"
             name="username"
@@ -100,6 +104,8 @@ const RegisterForm = ({setToggle}) => {
           />
           <TextValidator
             fullWidth
+            margin="normal"
+            size="small"
             label="password"
             placeholder="password"
             name="password"
@@ -111,6 +117,8 @@ const RegisterForm = ({setToggle}) => {
           />
           <TextValidator
             fullWidth
+            margin="normal"
+            size="small"
             label="re-type password"
             placeholder="re-type password"
             name="confirm"
@@ -122,6 +130,8 @@ const RegisterForm = ({setToggle}) => {
           />
           <TextValidator
             fullWidth
+            margin="normal"
+            size="small"
             label="email"
             placeholder="email"
             name="email"
@@ -133,6 +143,8 @@ const RegisterForm = ({setToggle}) => {
           />
           <TextValidator
             fullWidth
+            margin="normal"
+            size="small"
             label="full name"
             placeholder="full name"
             name="full_name"
@@ -141,10 +153,24 @@ const RegisterForm = ({setToggle}) => {
             validators={validators.full_name}
             errorMessages={errorMessages.full_name}
           />
-          <Button fullWidth color="primary" type="submit" variant="contained">
+          <Link textAlign="center">
+            <Typography mt={1}>Read privacy policy</Typography>
+          </Link>
+          <Button
+            fullWidth
+            sx={{mt: 2, mb: 2}}
+            color="primary"
+            type="submit"
+            variant="contained"
+          >
             Register
           </Button>
         </ValidatorForm>
+      </Grid>
+      <Grid textAlign="center" item xs={10} sx={{mb: 2}}>
+        <Typography component="subtitle1" variant="subtitle1">
+          Already an account?
+        </Typography>
       </Grid>
     </Grid>
   );

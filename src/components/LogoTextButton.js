@@ -11,10 +11,15 @@ const LogoButton = () => {
         navigate('/home');
       }}
     >
-      <Typography component="h3" variant="h4" display="inline" color="#3A9FB5">
+      <Typography component="h3" variant="h4" display="inline" color="primary">
         Drink
       </Typography>
-      <Typography component="h3" variant="h4" display="inline" color="#BDA243">
+      <Typography
+        component="h3"
+        variant="h4"
+        display="inline"
+        color="secondary"
+      >
         tender
       </Typography>
     </Link>

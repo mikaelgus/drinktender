@@ -2,10 +2,13 @@ const themeOptions = {
   palette: {
     type: 'light',
     primary: {
-      main: '#00104a',
+      main: '#3997AC',
     },
     secondary: {
-      main: '#d60202',
+      main: '#BDA243',
+    },
+    danger: {
+      main: '#C20114',
     },
   },
   typography: {
@@ -18,7 +21,7 @@ const themeOptions = {
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: 10,
   },
 };
 

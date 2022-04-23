@@ -34,16 +34,18 @@ const LoginForm = () => {
   return (
     <Grid container justifyContent="center">
       <LogoButton />
-      <Grid item xs={12}>
-        <Typography component="h4" variant="h5" gutterBottom>
+      <Grid textAlign="center" item xs={10}>
+        <Typography component="h5" variant="h5" mt={1}>
           Login
         </Typography>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
+            margin="normal"
+            size="small"
             label="username"
             placeholder="username"
             name="username"
@@ -52,6 +54,8 @@ const LoginForm = () => {
           />
           <TextField
             fullWidth
+            margin="normal"
+            size="small"
             label="password"
             placeholder="password"
             name="password"
@@ -59,10 +63,21 @@ const LoginForm = () => {
             onChange={handleInputChange}
             value={inputs.password}
           />
-          <Button fullWidth color="primary" type="submit" variant="contained">
+          <Button
+            sx={{mt: 2, mb: 2}}
+            fullWidth
+            color="primary"
+            type="submit"
+            variant="contained"
+          >
             Login
           </Button>
         </form>
+      </Grid>
+      <Grid textAlign="center" item xs={10} sx={{mb: 2}}>
+        <Typography component="subtitle1" variant="subtitle1">
+          Need an account?
+        </Typography>
       </Grid>
     </Grid>
   );

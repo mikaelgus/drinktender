@@ -1,4 +1,4 @@
-import {Button} from '@mui/material';
+import {Button, Grid} from '@mui/material';
 import {useState} from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
@@ -8,17 +8,17 @@ const Login = () => {
   return (
     <>
       {toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
-      OR
-      <Button
-        fullWidth
-        color="primary"
-        variant="contained"
-        onClick={() => {
-          setToggle(!toggle);
-        }}
-      >
-        {toggle ? 'register' : 'login'}
-      </Button>
+      <Grid container justifyContent="center">
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={() => {
+            setToggle(!toggle);
+          }}
+        >
+          {toggle ? 'register' : 'login'}
+        </Button>
+      </Grid>
     </>
   );
 };
