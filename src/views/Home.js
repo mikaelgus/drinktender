@@ -1,12 +1,15 @@
 import MediaTable from '../components/MediaTable';
-import {Typography} from '@mui/material';
+import {Grid, Typography} from '@mui/material';
 
 const Home = () => {
   return (
     <>
-      <Typography component="h1" variant="h2">
-        Home
-      </Typography>
+      <Grid container justifyContent="center">
+        <Typography component="h5" variant="h5" mt={1}>
+          Resent posts
+        </Typography>
+      </Grid>
+
       <MediaTable />
     </>
   );

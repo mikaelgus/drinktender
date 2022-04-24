@@ -10,6 +10,12 @@ const themeOptions = {
     danger: {
       main: '#C20114',
     },
+    edit: {
+      main: '#FFFFFF',
+    },
+    postname: {
+      main: '#000000',
+    },
   },
   typography: {
     fontFamily: 'Lato',

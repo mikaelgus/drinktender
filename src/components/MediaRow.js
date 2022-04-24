@@ -1,4 +1,5 @@
-import {Button, ImageListItem, ImageListItemBar} from '@mui/material';
+import {EditOutlined} from '@mui/icons-material';
+import {IconButton, ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 import {Link} from 'react-router-dom';
@@ -13,6 +14,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   };
 
   const {update, setUpdate} = useContext(MediaContext);
+  // eslint-disable-next-line no-unused-vars
   const doDelete = () => {
     const ok = confirm('Do juu delte?');
     if (ok) {
@@ -33,7 +35,12 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   console.log('inside dsc', description);
   console.log(filters);
   return (
-    <ImageListItem key={file.file_id}>
+    <ImageListItem
+      key={file.file_id}
+      component={Link}
+      to={'/single'}
+      state={{file}}
+    >
       <img
         src={file.thumbnails ? mediaUrl + file.thumbnails.w320 : 'logo512.png'}
         alt={file.title}
@@ -45,36 +52,34 @@ const MediaRow = ({file, userId, deleteMedia}) => {
         sepia(${filters.sepia}%)`,
         }}
       />
-      <ImageListItemBar
-        actionIcon={
-          <>
-            <Button
-              variant="contained"
+      {userId == file.user_id && (
+        <ImageListItemBar
+          sx={{
+            background:
+              'linear-gradient(to left, rgba(0,0,0,0.5) 0%, ' +
+              'rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%)',
+          }}
+          position="top"
+          actionIcon={
+            <IconButton
+              color="edit"
               component={Link}
-              to={'/single'}
+              to={'/modify'}
               state={{file}}
             >
-              View
-            </Button>
-            {userId == file.user_id && (
-              <>
-                <Button
-                  variant="contained"
-                  component={Link}
-                  to={'/modify'}
-                  state={{file}}
-                >
-                  Edit
-                </Button>
-                <Button variant="contained" onClick={doDelete}>
-                  Delete
-                </Button>
-              </>
-            )}
-          </>
+              <EditOutlined />
+            </IconButton>
+          }
+        />
+      )}
+      <ImageListItemBar
+        position="below"
+        actionIcon={
+          <IconButton sx={{fontSize: '0.8rem'}} color="postname">
+            {file.title}
+          </IconButton>
         }
-        title={file.title}
-        subtitle={description}
+        actionPosition="left"
       />
     </ImageListItem>
   );

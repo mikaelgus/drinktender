@@ -116,7 +116,7 @@ const Modify = () => {
               <CircularProgress />
             ) : (
               <Button
-                disabled={!allFilled}
+                disabled={allFilled}
                 fullWidth
                 color="primary"
                 type="submit"

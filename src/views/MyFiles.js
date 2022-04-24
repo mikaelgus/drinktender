@@ -1,14 +1,17 @@
 import MediaTable from '../components/MediaTable';
-import {Typography} from '@mui/material';
+import {Grid, Typography} from '@mui/material';
 import {BackButton} from '../components/BackButton';
 
 const MyFiles = () => {
   return (
     <>
-      <Typography component="h1" variant="h2">
-        MyFiles
-      </Typography>
       <BackButton />
+      <Grid container justifyContent="center">
+        <Typography component="h5" variant="h5">
+          My posts
+        </Typography>
+      </Grid>
+
       <MediaTable allFiles={false} />
     </>
   );
