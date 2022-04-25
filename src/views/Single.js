@@ -1,4 +1,4 @@
-import {useLocation} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import {
   Card,
@@ -38,9 +38,12 @@ const Single = () => {
               </Avatar>
             }
             action={
-              <IconButton>
-                <EditOutlined />
-              </IconButton>
+              user &&
+              user.user_id == file.user_id && (
+                <IconButton component={Link} to={'/modify'} state={{file}}>
+                  <EditOutlined />
+                </IconButton>
+              )
             }
             titleTypographyProps={{variant: 'h6'}}
             title={file.title}
