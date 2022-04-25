@@ -5,21 +5,19 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  List,
-  ListItem,
-  ListItemAvatar,
+  CardHeader,
   Avatar,
+  IconButton,
+  Grid,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
-import {useEffect, useState} from 'react';
-import {useTag} from '../hooks/ApiHooks';
+import {EditOutlined, StarBorder} from '@mui/icons-material';
+import {useContext} from 'react';
+import {MediaContext} from '../contexts/MediaContext';
 
 const Single = () => {
-  const [avatar, setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
-
+  const {user} = useContext(MediaContext);
   const location = useLocation();
   console.log(location);
   const file = location.state.file;
@@ -27,59 +25,96 @@ const Single = () => {
     description: file.description,
     filters: {},
   };
-
-  const {getTag} = useTag();
-
-  const fetchAvatar = async () => {
-    try {
-      if (file) {
-        const avatars = await getTag('avatar_' + file.user_id);
-        const ava = avatars.pop();
-        ava.filename = mediaUrl + ava.filename;
-        setAvatar(ava);
-        // hae käyttäjä apihooksista
-      }
-    } catch (err) {
-      // console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchAvatar();
-  }, []);
-
+  console.log('from user', user);
   return (
     <>
-      <Typography component="h1" variant="h2">
-        {file.title} <BackButton />
-      </Typography>
-      <Card>
-        <CardMedia
-          component={file.media_type === 'image' ? 'img' : file.media_type}
-          controls={true}
-          poster={mediaUrl + file.screenshot}
-          src={mediaUrl + file.filename}
-          alt={file.title}
-          sx={{
-            height: '60vh',
-            filter: `brightness(${filters.brightness}%)
+      <BackButton />
+      <Grid container justifyContent="center">
+        <Card sx={{width: '80vw'}}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton>
+                <EditOutlined />
+              </IconButton>
+            }
+            titleTypographyProps={{variant: 'h6'}}
+            title={file.title}
+          />
+          <CardMedia
+            component={file.media_type === 'image' ? 'img' : file.media_type}
+            controls={true}
+            poster={mediaUrl + file.screenshot}
+            src={mediaUrl + file.thumbnails.w320}
+            alt={file.title}
+            sx={{
+              height: '15vh',
+              width: '100%',
+              filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)
           sepia(${filters.sepia}%)`,
-          }}
-        />
-        <CardContent>
-          <Typography>{description}</Typography>
-          <List>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar variant={'circle'} src={avatar.filename} />
-              </ListItemAvatar>
-              <Typography variant="subtitle2">{file.user_id}</Typography>
-            </ListItem>
-          </List>
-        </CardContent>
-      </Card>
+            }}
+          />
+          <CardContent sx={{background: '#f9f9f9'}}>
+            <Typography variant="h6" mb={1}>
+              Ingredients:
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              {description}
+            </Typography>
+          </CardContent>
+          <CardContent>
+            <Typography variant="h6" mb={1}>
+              Preparation:
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              {description}
+            </Typography>
+          </CardContent>
+
+          <CardContent sx={{background: '#f9f9f9'}}>
+            <Typography variant="h6" mb={1}>
+              tags:
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              {description}
+            </Typography>
+          </CardContent>
+        </Card>
+
+        {user && (
+          <Card sx={{marginTop: '1rem', width: '80vw'}}>
+            <CardContent>
+              <Typography variant="h6" mb={1}>
+                Review:
+              </Typography>
+              <Typography variant="body1" mb={2}>
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+
+        <Card sx={{marginTop: '1rem', width: '80vw'}}>
+          <CardContent sx={{background: '#f9f9f9'}}>
+            <Typography variant="h6" mb={1}>
+              Comments:
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              {description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
     </>
   );
 };
