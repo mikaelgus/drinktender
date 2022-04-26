@@ -21,11 +21,14 @@ const Single = () => {
   const location = useLocation();
   console.log(location);
   const file = location.state.file;
-  const {description, filters} = safeParseJson(file.description) || {
+  const {description, instructions, filters} = safeParseJson(
+    file.description
+  ) || {
     description: file.description,
+    instructions: {},
     filters: {},
   };
-  console.log('from user', user);
+  console.log('from singlem description', instructions);
   return (
     <>
       <BackButton />
@@ -76,7 +79,7 @@ const Single = () => {
               Preparation:
             </Typography>
             <Typography variant="body1" mb={2}>
-              {description}
+              {instructions}
             </Typography>
           </CardContent>
 
@@ -85,7 +88,7 @@ const Single = () => {
               tags:
             </Typography>
             <Typography variant="body1" mb={2}>
-              {description}
+              jotain, vielä, ehkä, tai, kai
             </Typography>
           </CardContent>
         </Card>
@@ -113,7 +116,7 @@ const Single = () => {
               Comments:
             </Typography>
             <Typography variant="body1" mb={2}>
-              {description}
+              kovasti kommentointia
             </Typography>
           </CardContent>
         </Card>

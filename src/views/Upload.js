@@ -15,10 +15,11 @@ import {TextValidator} from 'react-material-ui-form-validator';
 import {BackButton} from '../components/BackButton';
 
 const Upload = () => {
-  const [preview, setPreview] = useState('logo192.png');
+  const [preview, setPreview] = useState('drink175.png');
   const alkuarvot = {
     title: '',
     description: '',
+    instructions: '',
   };
   const filterarvot = {
     brightness: 100,
@@ -48,6 +49,7 @@ const Upload = () => {
       console.log('doUpload');
       const desc = {
         description: inputs.description,
+        instructions: inputs.instructions,
         filters: filterInputs,
       };
       const token = localStorage.getItem('token');
@@ -96,17 +98,20 @@ const Upload = () => {
 
   return (
     <>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography component="h1" variant="h2" gutterBottom>
-            Upload <BackButton />
+      <BackButton />
+      <Grid container justifyContent="center">
+        <Grid textAlign="center" item xs={10}>
+          <Typography component="h5" variant="h5" mt={1}>
+            Post a recipe
           </Typography>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={10}>
           <ValidatorForm onSubmit={handleSubmit}>
             <TextValidator
               fullWidth
+              margin="normal"
+              size="small"
               placeholder="title"
               name="title"
               onChange={handleInputChange}
@@ -115,19 +120,33 @@ const Upload = () => {
               errorMessages={errorMessages.title}
             />
             <TextValidator
+              multiline
               fullWidth
-              placeholder="description"
+              margin="normal"
+              size="small"
+              placeholder="ingredients"
               name="description"
               onChange={handleInputChange}
               value={inputs.description}
               validators={validators.description}
               errorMessages={errorMessages.description}
             />
-
             <TextValidator
+              multiline
+              fullWidth
+              margin="normal"
+              size="small"
+              placeholder="instructions"
+              name="instructions"
+              onChange={handleInputChange}
+              value={inputs.instructions}
+            />
+            <TextValidator
+              margin="normal"
+              size="small"
               type="file"
               name="file"
-              accept="image/*, video/*, audio/*"
+              accept="image/*"
               onChange={handleInputChange}
               validators={validators.file}
               errorMessages={errorMessages.file}
@@ -143,14 +162,14 @@ const Upload = () => {
                 type="submit"
                 variant="contained"
               >
-                Upload
+                Post
               </Button>
             )}
           </ValidatorForm>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid item xs={12}>
+      <Grid container justifyContent="center">
+        <Grid item>
           <img
             style={{
               width: '50%',
@@ -163,8 +182,8 @@ const Upload = () => {
             alt="preview"
           />
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={8}>
             <Slider
               name="brightness"
               min={0}
@@ -176,8 +195,8 @@ const Upload = () => {
             />
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={8}>
             <Slider
               name="contrast"
               min={0}
@@ -189,8 +208,8 @@ const Upload = () => {
             />
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={8}>
             <Slider
               name="saturate"
               min={0}
@@ -202,8 +221,8 @@ const Upload = () => {
             />
           </Grid>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
+        <Grid container justifyContent="center">
+          <Grid item xs={8}>
             <Slider
               name="sepia"
               min={0}
