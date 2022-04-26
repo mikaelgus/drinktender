@@ -33,7 +33,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   };
 
   console.log('inside dsc', description);
-  console.log(filters);
+
   return (
     <ImageListItem
       key={file.file_id}

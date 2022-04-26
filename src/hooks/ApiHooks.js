@@ -146,6 +146,40 @@ const useLogin = () => {
   return {postLogin};
 };
 
+const useComment = () => {
+  const postComment = async (formdata, token, id) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+      },
+      body: formdata,
+    };
+    return await fetchJson(baseUrl + 'comments/' + id, fetchOptions);
+  };
+
+  const getComment = async (id) => {
+    const commentResult = await fetchJson(baseUrl + 'comments/file/' + id);
+    // console.log(commentResult);
+    if (commentResult.length > 0) {
+      return commentResult;
+    } else {
+      throw new Error('No comments');
+    }
+  };
+
+  const deleteComment = async (token, id) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'comments/' + id, fetchOptions);
+  };
+  return {postComment, getComment, deleteComment};
+};
+
 const useTag = () => {
   const getTag = async (tag) => {
     const tagResult = await fetchJson(baseUrl + 'tags/' + tag);
@@ -170,4 +204,4 @@ const useTag = () => {
   return {getTag, postTag};
 };
 
-export {useMedia, useLogin, useUser, useTag};
+export {useMedia, useLogin, useUser, useTag, useComment};
