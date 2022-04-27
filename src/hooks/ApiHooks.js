@@ -169,7 +169,7 @@ const useComment = () => {
     }
   };
 
-  const deleteComment = async (token, id) => {
+  const deleteComment = async (id, token) => {
     const fetchOptions = {
       method: 'DELETE',
       headers: {

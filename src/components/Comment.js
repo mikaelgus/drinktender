@@ -1,5 +1,12 @@
 import PropTypes from 'prop-types';
-import {Grid, List, ListItem, ListItemText, Typography} from '@mui/material';
+import {
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
@@ -8,13 +15,12 @@ const Comment = ({file, userId, deleteComment}) => {
 
   // eslint-disable-next-line no-unused-vars
   const doDelete = () => {
-    const confirm = confirm('Do you want to delete this comment?');
-    if (confirm) {
+    const ok = confirm('Do you want to delete this comment?');
+    if (ok) {
       try {
-        const deleteInfo = deleteComment(
-          file.file_id,
-          localStorage.getItem('token')
-        );
+        const token = localStorage.getItem('token');
+        const data = file.comment_id;
+        const deleteInfo = deleteComment(data, token);
         if (deleteInfo) {
           setUpdate(!update);
         }
@@ -23,16 +29,22 @@ const Comment = ({file, userId, deleteComment}) => {
       }
     }
   };
-  // console.log(file);
+
+  console.log(file.comment_id);
   return (
     <Grid container>
       <Grid item xs={12}>
         <List>
-          <ListItem key={file.file_id} state={{file}}>
+          <ListItem key={file.file_id}>
             <ListItemText
               primary={file.user_id}
               secondary={<Typography>{file.comment}</Typography>}
             ></ListItemText>
+            {userId == file.user_id && (
+              <IconButton variant="contained" onClick={doDelete}>
+                Delete
+              </IconButton>
+            )}
           </ListItem>
         </List>
       </Grid>

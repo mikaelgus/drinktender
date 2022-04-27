@@ -113,7 +113,9 @@ const Single = () => {
               <ListItemAvatar>
                 <Avatar variant={'circle'} src={avatar.filename} />
               </ListItemAvatar>
-              <Typography variant="subtitle2">{file.user_id}</Typography>
+              <Typography variant="subtitle2">
+                Käyttäjä: {file.user_id}
+              </Typography>
             </ListItem>
           </List>
         </CardContent>
