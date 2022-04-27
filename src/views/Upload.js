@@ -3,6 +3,7 @@ import {
   CircularProgress,
   Grid,
   Slider,
+  Stack,
   Typography,
 } from '@mui/material';
 import {useMedia, useTag} from '../hooks/ApiHooks';
@@ -13,6 +14,7 @@ import {appID} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
 import {BackButton} from '../components/BackButton';
+import {Add, Remove} from '@mui/icons-material';
 
 const Upload = () => {
   const [preview, setPreview] = useState('drink175.png');
@@ -101,13 +103,131 @@ const Upload = () => {
       <BackButton />
       <Grid container justifyContent="center">
         <Grid textAlign="center" item xs={10}>
-          <Typography component="h5" variant="h5" mt={1}>
+          <Typography component="h5" variant="h5" mt={1} mb={2}>
             Post a recipe
           </Typography>
         </Grid>
 
-        <Grid item xs={10}>
+        <Grid item xs={8}>
           <ValidatorForm onSubmit={handleSubmit}>
+            <Grid container justifyContent="center">
+              <Grid item xs={8}>
+                <Grid container justifyContent="center">
+                  {' '}
+                  <img
+                    style={{
+                      width: '50%',
+                      filter: `brightness(${filterInputs.brightness}%)
+              contrast(${filterInputs.contrast}%)
+              saturate(${filterInputs.saturate}%)
+              sepia(${filterInputs.sepia}%)`,
+                    }}
+                    src={preview}
+                    alt="preview"
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid container justifyContent="center">
+              <Grid item xs={10}>
+                <Typography variant="subtitle2">brightness</Typography>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  sx={{mb: 1}}
+                  alignItems="center"
+                >
+                  <Remove />
+                  <Slider
+                    name="brightness"
+                    min={0}
+                    max={200}
+                    step={1}
+                    valueLabelCircle
+                    onChange={handleSliderChange}
+                    value={filterInputs.brightness}
+                  />
+                  <Add />
+                </Stack>
+              </Grid>
+
+              <Grid item xs={10}>
+                <Typography variant="subtitle2">contrast</Typography>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  sx={{mb: 1}}
+                  alignItems="center"
+                >
+                  <Remove />
+                  <Slider
+                    name="contrast"
+                    min={0}
+                    max={200}
+                    step={1}
+                    onChange={handleSliderChange}
+                    value={filterInputs.contrast}
+                  />
+                  <Add />
+                </Stack>
+              </Grid>
+
+              <Grid item xs={10}>
+                <Typography variant="subtitle2">saturate</Typography>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  sx={{mb: 1}}
+                  alignItems="center"
+                >
+                  <Remove />
+                  <Slider
+                    name="saturate"
+                    min={0}
+                    max={200}
+                    step={1}
+                    onChange={handleSliderChange}
+                    value={filterInputs.saturate}
+                  />
+                  <Add />
+                </Stack>
+              </Grid>
+
+              <Grid item xs={10}>
+                <Typography variant="subtitle2">sepia</Typography>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  sx={{mb: 1}}
+                  alignItems="center"
+                >
+                  <Remove />
+                  <Slider
+                    name="sepia"
+                    min={0}
+                    max={100}
+                    step={1}
+                    // valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.sepia}
+                  />
+                  <Add />
+                </Stack>
+              </Grid>
+
+              <Grid container justifyContent="center">
+                <TextValidator
+                  margin="normal"
+                  size="small"
+                  type="file"
+                  name="file"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  validators={validators.file}
+                  errorMessages={errorMessages.file}
+                />
+              </Grid>
+            </Grid>
             <TextValidator
               fullWidth
               margin="normal"
@@ -126,6 +246,7 @@ const Upload = () => {
               size="small"
               placeholder="ingredients"
               name="description"
+              style={{whiteSpace: 'pre-wrap'}}
               onChange={handleInputChange}
               value={inputs.description}
               validators={validators.description}
@@ -138,18 +259,9 @@ const Upload = () => {
               size="small"
               placeholder="instructions"
               name="instructions"
+              style={{whiteSpace: 'pre-wrap'}}
               onChange={handleInputChange}
               value={inputs.instructions}
-            />
-            <TextValidator
-              margin="normal"
-              size="small"
-              type="file"
-              name="file"
-              accept="image/*"
-              onChange={handleInputChange}
-              validators={validators.file}
-              errorMessages={errorMessages.file}
             />
 
             {loading ? (
@@ -161,78 +273,12 @@ const Upload = () => {
                 color="primary"
                 type="submit"
                 variant="contained"
+                sx={{marginTop: '2rem'}}
               >
                 Post
               </Button>
             )}
           </ValidatorForm>
-        </Grid>
-      </Grid>
-      <Grid container justifyContent="center">
-        <Grid item>
-          <img
-            style={{
-              width: '50%',
-              filter: `brightness(${filterInputs.brightness}%)
-              contrast(${filterInputs.contrast}%)
-              saturate(${filterInputs.saturate}%)
-              sepia(${filterInputs.sepia}%)`,
-            }}
-            src={preview}
-            alt="preview"
-          />
-        </Grid>
-        <Grid container justifyContent="center">
-          <Grid item xs={8}>
-            <Slider
-              name="brightness"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.brightness}
-            />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="center">
-          <Grid item xs={8}>
-            <Slider
-              name="contrast"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.contrast}
-            />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="center">
-          <Grid item xs={8}>
-            <Slider
-              name="saturate"
-              min={0}
-              max={200}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.saturate}
-            />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="center">
-          <Grid item xs={8}>
-            <Slider
-              name="sepia"
-              min={0}
-              max={100}
-              step={1}
-              valueLabelDisplay="on"
-              onChange={handleSliderChange}
-              value={filterInputs.sepia}
-            />
-          </Grid>
         </Grid>
       </Grid>
     </>

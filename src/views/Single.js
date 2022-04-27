@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
-import {EditOutlined, StarBorder} from '@mui/icons-material';
+import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
@@ -37,7 +37,7 @@ const Single = () => {
           <CardHeader
             avatar={
               <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
-                R
+                <LocalBar />
               </Avatar>
             }
             action={
@@ -70,7 +70,7 @@ const Single = () => {
             <Typography variant="h6" mb={1}>
               Ingredients:
             </Typography>
-            <Typography variant="body1" mb={2}>
+            <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
               {description}
             </Typography>
           </CardContent>
@@ -78,7 +78,7 @@ const Single = () => {
             <Typography variant="h6" mb={1}>
               Preparation:
             </Typography>
-            <Typography variant="body1" mb={2}>
+            <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
               {instructions}
             </Typography>
           </CardContent>
