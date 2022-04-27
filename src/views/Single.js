@@ -76,7 +76,7 @@ const Single = () => {
           </CardContent>
           <CardContent>
             <Typography variant="h6" mb={1}>
-              Preparation:
+              Instructions:
             </Typography>
             <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
               {instructions}

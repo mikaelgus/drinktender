@@ -1,8 +1,8 @@
-import {EditOutlined} from '@mui/icons-material';
+import {DeleteForeverOutlined} from '@mui/icons-material';
 import {IconButton, ImageListItem, ImageListItemBar} from '@mui/material';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
@@ -14,9 +14,10 @@ const MediaRow = ({file, userId, deleteMedia}) => {
   };
 
   const {update, setUpdate} = useContext(MediaContext);
-  // eslint-disable-next-line no-unused-vars
+  const navigate = useNavigate();
+
   const doDelete = () => {
-    const ok = confirm('Do juu delte?');
+    const ok = confirm('Are you sure you want delete your post?');
     if (ok) {
       try {
         const deleteInfo = deleteMedia(
@@ -29,11 +30,12 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       } catch (err) {
         // console.log(err);
       }
+      navigate('/home');
     }
   };
 
-  console.log('inside dsc', description);
-  console.log(filters);
+  console.log('media row desc', description);
+
   return (
     <ImageListItem
       key={file.file_id}
@@ -61,13 +63,8 @@ const MediaRow = ({file, userId, deleteMedia}) => {
           }}
           position="top"
           actionIcon={
-            <IconButton
-              color="edit"
-              component={Link}
-              to={'/modify'}
-              state={{file}}
-            >
-              <EditOutlined />
+            <IconButton color="edit" onClick={doDelete}>
+              <DeleteForeverOutlined />
             </IconButton>
           }
         />
