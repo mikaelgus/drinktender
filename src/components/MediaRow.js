@@ -8,7 +8,7 @@ import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
-  const {description, filters} = safeParseJson(file.description) || {
+  const {filters} = safeParseJson(file.description) || {
     description: file.description,
     filters: {},
   };
@@ -32,7 +32,7 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     }
   };
 
-  console.log('inside dsc', description);
+  // console.log('inside dsc', description);
 
   return (
     <ImageListItem

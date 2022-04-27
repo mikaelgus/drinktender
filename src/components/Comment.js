@@ -14,36 +14,38 @@ const Comment = ({file, userId, deleteComment}) => {
   const {update, setUpdate} = useContext(MediaContext);
 
   // eslint-disable-next-line no-unused-vars
-  const doDelete = () => {
+  const doDelete = async () => {
     const ok = confirm('Do you want to delete this comment?');
     if (ok) {
       try {
         const token = localStorage.getItem('token');
         const data = file.comment_id;
-        const deleteInfo = deleteComment(data, token);
+        const deleteInfo = await deleteComment(data, token);
         if (deleteInfo) {
           setUpdate(!update);
         }
       } catch (err) {
-        console.log('comment delete error', err);
+        console.log('comment doDelete: ', err);
       }
     }
   };
 
-  console.log(file.comment_id);
+  // console.log(file.comment_id);
   return (
     <Grid container>
       <Grid item xs={12}>
         <List>
           <ListItem key={file.file_id}>
             <ListItemText
-              primary={file.user_id}
+              primary={`Käyttäjä: ${file.user_id}`}
               secondary={<Typography>{file.comment}</Typography>}
             ></ListItemText>
             {userId == file.user_id && (
-              <IconButton variant="contained" onClick={doDelete}>
-                Delete
-              </IconButton>
+              <>
+                <IconButton variant="contained" onClick={doDelete}>
+                  Delete
+                </IconButton>
+              </>
             )}
           </ListItem>
         </List>

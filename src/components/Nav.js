@@ -27,7 +27,7 @@ const Nav = () => {
   const fetchUser = async () => {
     try {
       const userData = await getUser(localStorage.getItem('token'));
-      console.log(userData);
+      // console.log(userData);
       setUser(userData);
     } catch (err) {
       setUser(null);
@@ -39,7 +39,7 @@ const Nav = () => {
     fetchUser();
   }, []);
 
-  console.log(user, open);
+  // console.log(user, open);
 
   return (
     <Box>

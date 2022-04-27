@@ -178,6 +178,7 @@ const useComment = () => {
     };
     return await fetchJson(baseUrl + 'comments/' + id, fetchOptions);
   };
+
   return {postComment, getComment, deleteComment};
 };
 

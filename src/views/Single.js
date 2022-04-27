@@ -34,7 +34,6 @@ const Single = () => {
   };
 
   const location = useLocation();
-  console.log(location);
   const file = location.state.file;
   const {description, filters} = safeParseJson(file.description) || {
     description: file.description,
@@ -59,7 +58,6 @@ const Single = () => {
   };
 
   const doComment = async () => {
-    console.log('doComment');
     try {
       const token = localStorage.getItem('token');
       const data = {file_id: file.file_id, comment: inputs.comment};
@@ -84,7 +82,7 @@ const Single = () => {
 
   const filled = inputs.comment != '';
 
-  console.log(inputs);
+  // console.log(inputs);
 
   return (
     <>
