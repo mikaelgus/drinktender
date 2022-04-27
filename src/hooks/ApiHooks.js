@@ -147,15 +147,16 @@ const useLogin = () => {
 };
 
 const useComment = () => {
-  const postComment = async (formdata, token, id) => {
+  const postComment = async (formdata, token) => {
     const fetchOptions = {
       method: 'POST',
       headers: {
         'x-access-token': token,
+        'Content-Type': 'application/json',
       },
-      body: formdata,
+      body: JSON.stringify(formdata),
     };
-    return await fetchJson(baseUrl + 'comments/' + id, fetchOptions);
+    return await fetchJson(baseUrl + 'comments/', fetchOptions);
   };
 
   const getComment = async (id) => {

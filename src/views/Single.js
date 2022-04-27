@@ -24,7 +24,7 @@ import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 
 const Single = () => {
-  const {user} = useContext(MediaContext);
+  const {user, update, setUpdate} = useContext(MediaContext);
   const [avatar, setAvatar] = useState({
     filename: 'https://placekitten.com/320',
   });
@@ -61,12 +61,13 @@ const Single = () => {
   const doComment = async () => {
     console.log('doComment');
     try {
-      const id = file.file_id;
       const token = localStorage.getItem('token');
-      const formdata = new FormData();
-      formdata.append('comment', inputs.comment);
-      const commentData = await postComment(formdata, token, id);
-      confirm(commentData);
+      const data = {file_id: file.file_id, comment: inputs.comment};
+      const commentData = await postComment(data, token);
+      if (commentData) {
+        // Kommentti listan päivitys
+        setUpdate(!update);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -80,6 +81,8 @@ const Single = () => {
   useEffect(() => {
     fetchAvatar();
   }, [inputs.file]);
+
+  const filled = inputs.comment != '';
 
   console.log(inputs);
 
@@ -132,7 +135,12 @@ const Single = () => {
                   onChange={handleInputChange}
                   value={inputs.comment}
                 />
-                <Button color="primary" type="submit" variant="contained">
+                <Button
+                  color="primary"
+                  type="submit"
+                  variant="contained"
+                  disabled={!filled}
+                >
                   Submit
                 </Button>
               </ValidatorForm>

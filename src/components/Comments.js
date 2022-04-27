@@ -7,7 +7,7 @@ import {useComment} from '../hooks/ApiHooks';
 import Comment from './Comment';
 
 const Comments = ({file}, {allComments = true}) => {
-  const {user} = useContext(MediaContext);
+  const {user, update} = useContext(MediaContext);
   const [postComments, setPostComments] = useState([]);
 
   const {getComment} = useComment();
@@ -17,6 +17,7 @@ const Comments = ({file}, {allComments = true}) => {
   const fetchComment = async () => {
     try {
       const comments = await getComment(file.file_id);
+      comments.reverse();
       setPostComments(comments);
     } catch (err) {
       console.log('fetchComment error', err);
@@ -25,7 +26,7 @@ const Comments = ({file}, {allComments = true}) => {
 
   useEffect(() => {
     fetchComment();
-  }, []);
+  }, [update]);
 
   return (
     <>
