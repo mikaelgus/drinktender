@@ -15,8 +15,8 @@ const LogoButton = () => {
         Drink
       </Typography>
       <Typography
-        component="h4"
-        variant="h4"
+        component="h3"
+        variant="h3"
         display="inline"
         color="secondary"
       >

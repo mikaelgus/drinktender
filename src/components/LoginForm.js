@@ -18,7 +18,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const doLogin = async () => {
-    console.log('doLogin');
     try {
       const userData = await postLogin(inputs);
       localStorage.setItem('token', userData.token);
@@ -30,7 +29,7 @@ const LoginForm = () => {
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(doLogin, alkuarvot);
-  console.log(inputs);
+  // console.log(inputs);
   return (
     <Grid container justifyContent="center">
       <LogoButton />
@@ -75,9 +74,7 @@ const LoginForm = () => {
         </form>
       </Grid>
       <Grid textAlign="center" item xs={10} sx={{mb: 2}}>
-        <Typography component="subtitle1" variant="subtitle1">
-          Need an account?
-        </Typography>
+        <Typography variant="subtitle1">Need an account?</Typography>
       </Grid>
     </Grid>
   );

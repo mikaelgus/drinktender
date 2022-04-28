@@ -26,9 +26,11 @@ const Nav = () => {
 
   const fetchUser = async () => {
     try {
-      const userData = await getUser(localStorage.getItem('token'));
-      // console.log(userData);
-      setUser(userData);
+      if (user) {
+        const userData = await getUser(localStorage.getItem('token'));
+        // console.log(userData);
+        setUser(userData);
+      }
     } catch (err) {
       setUser(null);
       navigate('/home');

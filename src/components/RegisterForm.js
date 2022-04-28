@@ -168,9 +168,7 @@ const RegisterForm = ({setToggle}) => {
         </ValidatorForm>
       </Grid>
       <Grid textAlign="center" item xs={10} sx={{mb: 2}}>
-        <Typography component="subtitle1" variant="subtitle1">
-          Already an account?
-        </Typography>
+        <Typography variant="subtitle1">Already an account?</Typography>
       </Grid>
     </Grid>
   );

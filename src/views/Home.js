@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <Grid container justifyContent="center">
         <Typography component="h5" variant="h5" mt={1}>
-          Recent posts
+          Resent posts
         </Typography>
       </Grid>
 

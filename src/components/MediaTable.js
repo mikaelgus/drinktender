@@ -10,7 +10,6 @@ const MediaTable = ({allFiles = true}) => {
   const {user} = useContext(MediaContext);
   const {mediaArray, loading, deleteMedia} = useMedia(allFiles, user?.user_id);
   const windowSize = useWindowSize();
-  // console.log('MediaTable: ' + mediaArray);
   return (
     <>
       {loading ? (

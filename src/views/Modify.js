@@ -84,10 +84,10 @@ const Modify = () => {
     filters
   );
 
-  console.log(inputs, filterInputs);
-
-  // upload button hidden if no tittle and file
-  const allFilled = (inputs.title != '') & (inputs.file != undefined);
+  const allFilled =
+    (inputs.title != '') &
+    (inputs.description != '') &
+    (inputs.instructions != '');
 
   return (
     <>
@@ -248,7 +248,7 @@ const Modify = () => {
               <CircularProgress />
             ) : (
               <Button
-                disabled={allFilled}
+                disabled={!allFilled}
                 fullWidth
                 color="primary"
                 type="submit"

@@ -95,7 +95,7 @@ const Upload = () => {
 
   console.log(inputs, filterInputs);
 
-  // upload button hidden if no title and file
+  // upload button hidden if no tittle and file
   const allFilled = (inputs.title != '') & (inputs.file != undefined);
 
   return (
