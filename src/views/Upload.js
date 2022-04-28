@@ -108,7 +108,7 @@ const Upload = () => {
           </Typography>
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={10}>
           <ValidatorForm onSubmit={handleSubmit}>
             <Grid container justifyContent="center">
               <Grid item xs={8}>
@@ -118,9 +118,9 @@ const Upload = () => {
                     style={{
                       width: '50%',
                       filter: `brightness(${filterInputs.brightness}%)
-              contrast(${filterInputs.contrast}%)
-              saturate(${filterInputs.saturate}%)
-              sepia(${filterInputs.sepia}%)`,
+                      contrast(${filterInputs.contrast}%)
+                      saturate(${filterInputs.saturate}%)
+                      sepia(${filterInputs.sepia}%)`,
                     }}
                     src={preview}
                     alt="preview"
@@ -143,7 +143,6 @@ const Upload = () => {
                     min={0}
                     max={200}
                     step={1}
-                    valueLabelCircle
                     onChange={handleSliderChange}
                     value={filterInputs.brightness}
                   />
