@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {useLocation} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {mediaUrl} from '../utils/variables';
 import useForm from '../hooks/FormHooks';
 import {
@@ -7,13 +7,12 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  List,
-  ListItem,
-  ListItemAvatar,
   Avatar,
   TextareaAutosize,
   Grid,
   Button,
+  CardHeader,
+  IconButton,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
@@ -22,10 +21,11 @@ import {useComment, useTag} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
+import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
-  const [avatar, setAvatar] = useState({
+  const [setAvatar] = useState({
     filename: 'https://placekitten.com/320',
   });
 
@@ -35,8 +35,11 @@ const Single = () => {
 
   const location = useLocation();
   const file = location.state.file;
-  const {description, filters} = safeParseJson(file.description) || {
+  const {description, instructions, filters} = safeParseJson(
+    file.description
+  ) || {
     description: file.description,
+    instructions: {},
     filters: {},
   };
 
@@ -86,42 +89,88 @@ const Single = () => {
 
   return (
     <>
-      <Typography component="h1" variant="h2">
-        {file.title} <BackButton />
-      </Typography>
-      <Card>
+      <BackButton />
+      <Card sx={{width: '80vw'}}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
+              <LocalBar />
+            </Avatar>
+          }
+          action={
+            user &&
+            user.user_id == file.user_id && (
+              <IconButton component={Link} to={'/modify'} state={{file}}>
+                <EditOutlined />
+              </IconButton>
+            )
+          }
+          titleTypographyProps={{variant: 'h6'}}
+          title={file.title}
+        />
         <CardMedia
           component={file.media_type === 'image' ? 'img' : file.media_type}
           controls={true}
           poster={mediaUrl + file.screenshot}
-          src={mediaUrl + file.filename}
+          src={mediaUrl + file.thumbnails.w320}
           alt={file.title}
           sx={{
-            height: '60vh',
+            height: '15vh',
+            width: '100%',
             filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)
           sepia(${filters.sepia}%)`,
           }}
         />
+        <CardContent sx={{background: '#f9f9f9'}}>
+          <Typography variant="h6" mb={1}>
+            Ingredients:
+          </Typography>
+          <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
+            {description}
+          </Typography>
+        </CardContent>
         <CardContent>
-          <Typography>{description}</Typography>
-          <List>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar variant={'circle'} src={avatar.filename} />
-              </ListItemAvatar>
-              <Typography variant="subtitle2">
-                Käyttäjä: {file.user_id}
-              </Typography>
-            </ListItem>
-          </List>
+          <Typography variant="h6" mb={1}>
+            Instructions:
+          </Typography>
+          <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
+            {instructions}
+          </Typography>
+        </CardContent>
+
+        <CardContent sx={{background: '#f9f9f9'}}>
+          <Typography variant="h6" mb={1}>
+            tags:
+          </Typography>
+          <Typography variant="body1" mb={2}>
+            jotain, vielä, ehkä, tai, kai
+          </Typography>
         </CardContent>
       </Card>
-      <Typography variant="h3" className="comments-title">
-        Comments
-      </Typography>
+
+      {user && (
+        <Card sx={{marginTop: '1rem', width: '80vw'}}>
+          <CardContent>
+            <Typography variant="h6" mb={1}>
+              Review:
+            </Typography>
+            <Typography variant="body1" mb={2}>
+              <StarBorder />
+              <StarBorder />
+              <StarBorder />
+              <StarBorder />
+              <StarBorder />
+            </Typography>
+          </CardContent>
+        </Card>
+      )}
+
       <Grid container>
+        <Typography variant="h3" className="comments-title">
+          Comments
+        </Typography>
         <Grid item xs={12}>
           {user && (
             <>
