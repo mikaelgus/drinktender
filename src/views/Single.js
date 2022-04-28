@@ -16,8 +16,8 @@ import {
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
-import {useContext, useEffect, useState} from 'react';
-import {useComment, useTag} from '../hooks/ApiHooks';
+import {useContext, useEffect} from 'react';
+import {useComment} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
@@ -25,9 +25,6 @@ import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
-  const [setAvatar] = useState({
-    filename: 'https://placekitten.com/320',
-  });
 
   const alkuarvot = {
     comment: '',
@@ -43,22 +40,7 @@ const Single = () => {
     filters: {},
   };
 
-  const {getTag} = useTag();
   const {postComment} = useComment();
-
-  const fetchAvatar = async () => {
-    try {
-      if (file) {
-        const avatars = await getTag('avatar_' + file.user_id);
-        const ava = avatars.pop();
-        ava.filename = mediaUrl + ava.filename;
-        setAvatar(ava);
-        // hae käyttäjä apihooksista
-      }
-    } catch (err) {
-      // console.log(err);
-    }
-  };
 
   const doComment = async () => {
     try {
@@ -79,13 +61,9 @@ const Single = () => {
     alkuarvot
   );
 
-  useEffect(() => {
-    fetchAvatar();
-  }, [inputs.file]);
+  useEffect(() => {}, [inputs.file]);
 
   const filled = inputs.comment != '';
-
-  // console.log(inputs);
 
   return (
     <>
@@ -204,7 +182,5 @@ const Single = () => {
 Single.propTypes = {
   setToggle: PropTypes.func,
 };
-
-// TODO in the next task: add propType for location
 
 export default Single;
