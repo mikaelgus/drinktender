@@ -13,18 +13,21 @@ import {
   Button,
   CardHeader,
   IconButton,
+  Rating,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
-import {useContext, useEffect} from 'react';
-import {useComment} from '../hooks/ApiHooks';
+import {useContext, useEffect, useState} from 'react';
+import {useComment, useRating} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
-import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
+import {EditOutlined, LocalBar} from '@mui/icons-material';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
+  // eslint-disable-next-line no-unused-vars
+  const {ratings, setRatings} = useState(0);
 
   const alkuarvot = {
     comment: '',
@@ -41,6 +44,7 @@ const Single = () => {
   };
 
   const {postComment} = useComment();
+  const {getRating, postRating} = useRating();
 
   const doComment = async () => {
     try {
@@ -56,14 +60,41 @@ const Single = () => {
     }
   };
 
+  const fetchRating = async () => {
+    try {
+      const ratingsData = await getRating(file.file_id);
+      setRatings(ratingsData);
+    } catch (err) {
+      console.log('fetchRating error ', err);
+    }
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const doRating = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const data = {file_id: file.file_id};
+      const ratingData = await postRating(data, token);
+      if (ratingData) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const {inputs, handleInputChange, handleSubmit} = useForm(
     doComment,
     alkuarvot
   );
 
-  useEffect(() => {}, [inputs.file]);
+  useEffect(() => {
+    fetchRating();
+  }, [inputs.file]);
 
   const filled = inputs.comment != '';
+
+  console.log(file);
 
   return (
     <>
@@ -136,11 +167,7 @@ const Single = () => {
               Review:
             </Typography>
             <Typography variant="body1" mb={2}>
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
+              <Rating value={ratings} />
             </Typography>
           </CardContent>
         </Card>

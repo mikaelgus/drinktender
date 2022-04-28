@@ -161,7 +161,6 @@ const useComment = () => {
 
   const getComment = async (id) => {
     const commentResult = await fetchJson(baseUrl + 'comments/file/' + id);
-    // console.log(commentResult);
     if (commentResult.length > 0) {
       return commentResult;
     } else {
@@ -188,7 +187,7 @@ const useTag = () => {
     if (tagResult.length > 0) {
       return tagResult;
     } else {
-      throw new Error('No results');
+      throw new Error('No tags');
     }
   };
 
@@ -206,4 +205,38 @@ const useTag = () => {
   return {getTag, postTag};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment};
+const useRating = () => {
+  const getRating = async (id) => {
+    const ratingResult = await fetchJson(baseUrl + 'ratings/file/' + id);
+    if (ratingResult.length > 0) {
+      return ratingResult;
+    } else {
+      throw new Error('No ratings');
+    }
+  };
+
+  const postRating = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'ratings/', fetchOptions);
+  };
+
+  const deleteRating = async (id, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'ratings/file/' + id, fetchOptions);
+  };
+  return {getRating, postRating, deleteRating};
+};
+
+export {useMedia, useLogin, useUser, useTag, useComment, useRating};
