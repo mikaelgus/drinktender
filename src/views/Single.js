@@ -19,7 +19,7 @@ import {MediaContext} from '../contexts/MediaContext';
 const Single = () => {
   const {user} = useContext(MediaContext);
   const location = useLocation();
-  console.log(location);
+  console.log('single location', location);
   const file = location.state.file;
   const {description, instructions, filters} = safeParseJson(
     file.description

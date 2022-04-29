@@ -129,7 +129,19 @@ const useUser = () => {
     return await fetchJson(baseUrl + 'users', fetchOptions);
   };
 
-  return {getUser, postUser, getUsername, getUserById};
+  const putUser = async (userId, data, token) => {
+    const fetchOptions = {
+      method: 'PUT',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'users/' + userId, fetchOptions);
+  };
+
+  return {getUser, postUser, getUsername, getUserById, putUser};
 };
 
 const useLogin = () => {
