@@ -216,25 +216,32 @@ const useRating = () => {
   };
 
   const postRating = async (data, token) => {
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        'x-access-token': token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    };
-    return await fetchJson(baseUrl + 'ratings/', fetchOptions);
+    const del = await deleteRating(data.file_id, token);
+    if (del) {
+      const fetchOptions = {
+        method: 'POST',
+        headers: {
+          'x-access-token': token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      return await fetchJson(baseUrl + 'ratings', fetchOptions);
+    }
   };
 
   const deleteRating = async (id, token) => {
-    const fetchOptions = {
-      method: 'DELETE',
-      headers: {
-        'x-access-token': token,
-      },
-    };
-    return await fetchJson(baseUrl + 'ratings/file/' + id, fetchOptions);
+    try {
+      const fetchOptions = {
+        method: 'DELETE',
+        headers: {
+          'x-access-token': token,
+        },
+      };
+      return await fetchJson(baseUrl + 'ratings/file/' + id, fetchOptions);
+    } catch (err) {
+      return true;
+    }
   };
   return {getRating, postRating, deleteRating};
 };

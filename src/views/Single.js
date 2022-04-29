@@ -27,7 +27,9 @@ import {EditOutlined, LocalBar} from '@mui/icons-material';
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
   // eslint-disable-next-line no-unused-vars
-  const {ratings, setRatings} = useState(0);
+  const [ratings, setRatings] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [userRating, setUserRating] = useState(0);
 
   const alkuarvot = {
     comment: '',
@@ -60,20 +62,31 @@ const Single = () => {
     }
   };
 
-  const fetchRating = async () => {
+  const fetchUserRating = async () => {
     try {
       const ratingsData = await getRating(file.file_id);
-      setRatings(ratingsData);
+
+      ratingsData.forEach((rating) => {
+        rating.user_id === user.user_id && setUserRating(rating.rating);
+      });
+
+      const summa = ratingsData.reduce((nro, rating) => {
+        console.log(nro, rating);
+        return nro + rating.rating;
+      }, 0);
+      const ka = summa / ratingsData.length;
+      setRatings(ka);
     } catch (err) {
       console.log('fetchRating error ', err);
     }
   };
+  console.log(ratings); // Keskiarvo
 
-  // eslint-disable-next-line no-unused-vars
-  const doRating = async () => {
+  const doRating = async (event, newValue) => {
+    setUserRating(newValue);
     try {
       const token = localStorage.getItem('token');
-      const data = {file_id: file.file_id};
+      const data = {file_id: file.file_id, rating: newValue};
       const ratingData = await postRating(data, token);
       if (ratingData) {
         setUpdate(!update);
@@ -89,12 +102,12 @@ const Single = () => {
   );
 
   useEffect(() => {
-    fetchRating();
-  }, [inputs.file]);
+    user && fetchUserRating();
+  }, [inputs.file, user, update]);
 
   const filled = inputs.comment != '';
 
-  console.log(file);
+  // console.log(file);
 
   return (
     <>
@@ -167,8 +180,9 @@ const Single = () => {
               Review:
             </Typography>
             <Typography variant="body1" mb={2}>
-              <Rating value={ratings} />
+              <Rating value={userRating} onChange={doRating} />
             </Typography>
+            <Typography>{ratings}</Typography>
           </CardContent>
         </Card>
       )}
