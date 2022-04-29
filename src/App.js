@@ -1,4 +1,8 @@
-import {Container} from '@mui/material';
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Container,
+} from '@mui/material';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Nav from './components/Nav';
@@ -13,9 +17,9 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+import BottomNav from './components/BottomNav';
 
 const theme = createTheme(themeOptions);
-
 const App = () => {
   return (
     // eslint-disable-next-line no-undef
@@ -34,6 +38,7 @@ const App = () => {
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
             </Routes>
+            <BottomNav />
           </Container>
         </ThemeProvider>
       </MediaProvider>
