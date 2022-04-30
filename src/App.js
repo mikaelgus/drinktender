@@ -13,6 +13,8 @@ import {ThemeProvider, createTheme} from '@mui/material/styles';
 import Upload from './views/Upload';
 import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
+import EditProfile from './views/EditProfile';
+import Policy from './views/Policy';
 
 const theme = createTheme(themeOptions);
 
@@ -33,6 +35,8 @@ const App = () => {
               <Route path="/upload" element={<Upload />} />
               <Route path="/myfiles" element={<MyFiles />} />
               <Route path="/modify" element={<Modify />} />
+              <Route path="/editprofile" element={<EditProfile />} />
+              <Route path="/policy" element={<Policy />} />
             </Routes>
           </Container>
         </ThemeProvider>

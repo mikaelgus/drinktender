@@ -31,6 +31,7 @@ const Single = () => {
   };
 
   const location = useLocation();
+  console.log('single location', location);
   const file = location.state.file;
   const {description, instructions, filters} = safeParseJson(
     file.description
