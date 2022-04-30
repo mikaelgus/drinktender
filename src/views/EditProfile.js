@@ -10,7 +10,6 @@ import useForm from '../hooks/FormHooks';
 
 const EditProfile = () => {
   const {user} = useContext(MediaContext);
-  const userId = user.user_id;
 
   const alkuarvot = {
     username: user.username,
@@ -41,13 +40,14 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   const doProfile = async () => {
-    console.log('doProfile');
+    console.log('doProfile inputs', inputs);
     try {
       const token = localStorage.getItem('token');
-      const userData = await putUser(userId, inputs, token);
-      confirm(userData.message) && navigate(-1);
+      const userData = await putUser(inputs, token);
+
+      confirm(userData.message) && navigate('/profile');
     } catch (err) {
-      console.log(err.message);
+      alert(err.message);
     }
   };
 

@@ -68,7 +68,7 @@ const Modify = () => {
       const token = localStorage.getItem('token');
       const mediaData = await putMedia(file.file_id, data, token);
 
-      confirm(mediaData.message) && navigate(-1);
+      confirm(mediaData.message) && navigate('/home');
     } catch (err) {
       alert(err.message);
     }

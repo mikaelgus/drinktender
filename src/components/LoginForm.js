@@ -1,4 +1,4 @@
-import {Button, Grid, TextField, Typography} from '@mui/material';
+import {Button, Grid, TextField, Typography, Link} from '@mui/material';
 import {useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
@@ -74,10 +74,20 @@ const LoginForm = () => {
           </Button>
         </form>
       </Grid>
-      <Grid textAlign="center" item xs={10} sx={{mb: 2}}>
+      <Grid textAlign="center" item xs={10}>
         <Typography component="subtitle1" variant="subtitle1">
           Need an account?
         </Typography>
+      </Grid>
+      <Grid container justifyContent="center" sx={{mb: 2}}>
+        <Link
+          component="button"
+          onClick={() => {
+            navigate('/policy');
+          }}
+        >
+          <Typography mt={1}>Read privacy policy</Typography>
+        </Link>
       </Grid>
     </Grid>
   );

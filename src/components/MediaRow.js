@@ -8,7 +8,7 @@ import {safeParseJson} from '../utils/functions';
 import {mediaUrl} from '../utils/variables';
 
 const MediaRow = ({file, userId, deleteMedia}) => {
-  const {description, filters} = safeParseJson(file.description) || {
+  const {filters} = safeParseJson(file.description) || {
     description: file.description,
     filters: {},
   };
@@ -33,8 +33,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
       navigate('/home');
     }
   };
-
-  console.log('media row desc', description);
 
   return (
     <ImageListItem
