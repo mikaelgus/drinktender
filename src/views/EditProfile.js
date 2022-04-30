@@ -1,5 +1,5 @@
 import {Button, Grid, Typography} from '@mui/material';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {TextValidator} from 'react-material-ui-form-validator';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {useNavigate} from 'react-router-dom';
@@ -15,8 +15,8 @@ const EditProfile = () => {
     username: user.username,
     email: user.email,
     full_name: user.full_name,
-    /* password: '',
-    confirm: '', */
+    password: '',
+    confirm: '',
   };
   console.log('alkuarvot', alkuarvot);
 
@@ -24,27 +24,27 @@ const EditProfile = () => {
     username: ['required', 'minStringLength: 3'],
     email: ['required', 'isEmail'],
 
-    /* password: ['minStringLength: 5'],
-    confirm: ['isPasswordMatch'], */
+    password: ['minStringLength: 5'],
+    confirm: ['isPasswordMatch'],
   };
 
   const errorMessages = {
     username: ['required field', 'minimun 3 character'],
     email: ['required field', 'email is not valid'],
 
-    /* password: ['minimun 5 character'],
-    confirm: ['password do not mach'], */
+    password: ['minimun 5 character'],
+    confirm: ['password do not mach'],
   };
 
   const {putUser} = useUser();
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   const doProfile = async () => {
     console.log('doProfile inputs', inputs);
     try {
-      const token = localStorage.getItem('token');
+      delete inputs.confirm;
       const userData = await putUser(inputs, token);
-
       confirm(userData.message) && navigate('/profile');
     } catch (err) {
       alert(err.message);
@@ -58,14 +58,14 @@ const EditProfile = () => {
 
   console.log('inputs: ', inputs);
 
-  /* useEffect(() => {
+  useEffect(() => {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       if (value !== inputs.password) {
         return false;
       }
       return true;
     });
-  }, [inputs]); */
+  }, [inputs]);
 
   return (
     <>
@@ -101,6 +101,8 @@ const EditProfile = () => {
               type="email"
               onChange={handleInputChange}
               value={inputs.email}
+              validators={validators.email}
+              errorMessages={errorMessages.email}
             />
             <TextValidator
               fullWidth
@@ -112,24 +114,32 @@ const EditProfile = () => {
               onChange={handleInputChange}
               value={inputs.full_name}
             />
-            {/*  <TextValidator
+            <TextValidator
               fullWidth
               margin="normal"
               size="small"
-              label="new password"
-              placeholder="new password"
+              label="password"
+              placeholder="password"
               name="password"
               type="password"
+              onChange={handleInputChange}
+              value={inputs.password}
+              validators={validators.password}
+              errorMessages={errorMessages.password}
             />
             <TextValidator
               fullWidth
               margin="normal"
               size="small"
-              label="re-type new password"
-              placeholder="re-type new password"
+              label="re-type password"
+              placeholder="re-type password"
               name="confirm"
               type="password"
-            /> */}
+              onChange={handleInputChange}
+              value={inputs.confirm}
+              validators={validators.confirm}
+              errorMessages={errorMessages.confirm}
+            />
             <Button
               fullWidth
               sx={{mt: 2, mb: 2}}
