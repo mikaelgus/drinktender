@@ -4,6 +4,7 @@ import {TextValidator} from 'react-material-ui-form-validator';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {useNavigate} from 'react-router-dom';
 import {BackButton} from '../components/BackButton';
+import {LogoButton} from '../components/LogoTextButton';
 import {MediaContext} from '../contexts/MediaContext';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
@@ -71,6 +72,7 @@ const EditProfile = () => {
     <>
       <BackButton />
       <Grid container justifyContent="center">
+        <LogoButton />
         <Grid textAlign="center" item xs={10}>
           <Typography component="h5" variant="h5" mt={1}>
             Edit your profile

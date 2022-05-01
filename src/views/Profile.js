@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import {BackButton} from '../components/BackButton';
 import {Link} from 'react-router-dom';
+import {LogoButton} from '../components/LogoTextButton';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
@@ -30,6 +31,7 @@ const Profile = () => {
     <>
       <BackButton />
       <Grid container justifyContent="center">
+        <LogoButton />
         <Grid textAlign="center" item xs={10}>
           <Typography component="h5" variant="h5" mt={1} mb={2}>
             Profile

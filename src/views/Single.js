@@ -8,7 +8,6 @@ import {
   CardMedia,
   Typography,
   Avatar,
-  TextareaAutosize,
   Grid,
   Button,
   CardHeader,
@@ -22,6 +21,7 @@ import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
+import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
@@ -69,114 +69,118 @@ const Single = () => {
   return (
     <>
       <BackButton />
-      <Card sx={{width: '80vw'}}>
-        <CardHeader
-          avatar={
-            <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
-              <LocalBar />
-            </Avatar>
-          }
-          action={
-            user &&
-            user.user_id == file.user_id && (
-              <IconButton component={Link} to={'/modify'} state={{file}}>
-                <EditOutlined />
-              </IconButton>
-            )
-          }
-          titleTypographyProps={{variant: 'h6'}}
-          title={file.title}
-        />
-        <CardMedia
-          component={file.media_type === 'image' ? 'img' : file.media_type}
-          controls={true}
-          poster={mediaUrl + file.screenshot}
-          src={mediaUrl + file.thumbnails.w320}
-          alt={file.title}
-          sx={{
-            margin: 'auto',
-            height: '100%',
-            width: '100%',
-            filter: `brightness(${filters.brightness}%)
+      <Grid container justifyContent="center">
+        <Card sx={{width: '80vw'}}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
+                <LocalBar />
+              </Avatar>
+            }
+            action={
+              user &&
+              user.user_id == file.user_id && (
+                <IconButton component={Link} to={'/modify'} state={{file}}>
+                  <EditOutlined />
+                </IconButton>
+              )
+            }
+            titleTypographyProps={{variant: 'h6'}}
+            title={file.title}
+          />
+          <CardMedia
+            component={file.media_type === 'image' ? 'img' : file.media_type}
+            controls={true}
+            poster={mediaUrl + file.screenshot}
+            src={mediaUrl + file.thumbnails.w320}
+            alt={file.title}
+            sx={{
+              height: '15vh',
+              width: '100%',
+              filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)
           sepia(${filters.sepia}%)`,
-          }}
-        />
-        <CardContent sx={{background: '#f9f9f9'}}>
-          <Typography variant="h6" mb={1}>
-            Ingredients:
-          </Typography>
-          <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
-            {description}
-          </Typography>
-        </CardContent>
-        <CardContent>
-          <Typography variant="h6" mb={1}>
-            Instructions:
-          </Typography>
-          <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
-            {instructions}
-          </Typography>
-        </CardContent>
-
-        <CardContent sx={{background: '#f9f9f9'}}>
-          <Typography variant="h6" mb={1}>
-            tags:
-          </Typography>
-          <Typography variant="body1" mb={2}>
-            jotain, vielä, ehkä, tai, kai
-          </Typography>
-        </CardContent>
-      </Card>
-
-      {user && (
-        <Card sx={{marginTop: '1rem', width: '80vw'}}>
+            }}
+          />
+          <CardContent sx={{background: '#f9f9f9'}}>
+            <Typography variant="h6" mb={1}>
+              Ingredients:
+            </Typography>
+            <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
+              {description}
+            </Typography>
+          </CardContent>
           <CardContent>
             <Typography variant="h6" mb={1}>
-              Review:
+              Instructions:
+            </Typography>
+            <Typography variant="body1" mb={2} sx={{whiteSpace: 'pre-line'}}>
+              {instructions}
+            </Typography>
+          </CardContent>
+
+          <CardContent sx={{background: '#f9f9f9'}}>
+            <Typography variant="h6" mb={1}>
+              tags:
             </Typography>
             <Typography variant="body1" mb={2}>
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
-              <StarBorder />
+              jotain, vielä, ehkä, tai, kai
             </Typography>
           </CardContent>
         </Card>
-      )}
 
-      <Grid container>
-        <Typography variant="h3" className="comments-title">
-          Comments
-        </Typography>
-        <Grid item xs={12}>
-          {user && (
-            <>
-              <ValidatorForm onSubmit={handleSubmit}>
-                <TextareaAutosize
-                  style={{width: '100%'}}
-                  minRows={3}
-                  placeholder="Add a comment"
-                  label="comment area"
-                  name="comment"
-                  onChange={handleInputChange}
-                  value={inputs.comment}
-                />
-                <Button
-                  color="primary"
-                  type="submit"
-                  variant="contained"
-                  disabled={!filled}
-                >
-                  Submit
-                </Button>
-              </ValidatorForm>
-            </>
-          )}
-        </Grid>
-        <Comments file={file} />
+        {user && (
+          <Card sx={{marginTop: '1rem', width: '80vw'}}>
+            <CardContent>
+              <Typography variant="h6" mb={1}>
+                Review:
+              </Typography>
+              <Typography variant="body1" mb={2}>
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+                <StarBorder />
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+
+        <Card sx={{marginTop: '1rem', width: '80vw', marginBottom: '2rem'}}>
+          <CardContent>
+            <Typography variant="h6" className="comments-title" mt={1}>
+              Comments:
+            </Typography>
+            <Grid item xs={12}>
+              {user && (
+                <>
+                  <ValidatorForm onSubmit={handleSubmit}>
+                    <TextValidator
+                      multiline
+                      fullWidth
+                      margin="normal"
+                      placeholder="Add a comment"
+                      label="Add a comment"
+                      name="comment"
+                      onChange={handleInputChange}
+                      value={inputs.comment}
+                    />
+                    <Button
+                      color="primary"
+                      type="submit"
+                      variant="contained"
+                      disabled={!filled}
+                    >
+                      Submit
+                    </Button>
+                  </ValidatorForm>
+                </>
+              )}
+            </Grid>
+            <Comments file={file} />
+          </CardContent>
+        </Card>
       </Grid>
     </>
   );
