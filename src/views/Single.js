@@ -13,15 +13,20 @@ import {
   CardHeader,
   IconButton,
   Rating,
+  ToggleButton,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
 import {useContext, useEffect, useState} from 'react';
-import {useComment, useRating} from '../hooks/ApiHooks';
+import {useComment, useFavourite, useRating} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
-import {EditOutlined, LocalBar} from '@mui/icons-material';
+import {
+  CheckCircleOutlineRounded,
+  EditOutlined,
+  LocalBar,
+} from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
@@ -30,6 +35,9 @@ const Single = () => {
   const [ratings, setRatings] = useState(0);
   // eslint-disable-next-line no-unused-vars
   const [userRating, setUserRating] = useState(0);
+
+  // eslint-disable-next-line no-unused-vars
+  const [selected, setSelected] = useState(false);
 
   const alkuarvot = {
     comment: '',
@@ -48,6 +56,7 @@ const Single = () => {
 
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
+  const {postFavourite} = useFavourite();
 
   const doComment = async () => {
     try {
@@ -109,6 +118,26 @@ const Single = () => {
   const filled = inputs.comment != '';
 
   // console.log(file);
+
+  // eslint-disable-next-line no-unused-vars
+  const doFavourite = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const data = {file_id: file.file_id};
+      const addFavourite = await postFavourite(data, token);
+      if (addFavourite) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const addFav = () => {
+    console.log('add favourite');
+  };
+  const delFav = () => {
+    console.log('no favourite');
+  };
 
   return (
     <>
@@ -186,6 +215,24 @@ const Single = () => {
               <Typography variant="body1" mb={2}>
                 {ratings}
               </Typography>
+              <ToggleButton
+                size="small"
+                color="secondary"
+                value="check"
+                selected={selected}
+                onChange={() => {
+                  setSelected(!selected);
+                  if (selected) {
+                    delFav();
+                  }
+                  if (!selected) {
+                    addFav();
+                  }
+                }}
+              >
+                Add to favourites:
+                <CheckCircleOutlineRounded />
+              </ToggleButton>
             </CardContent>
           </Card>
         )}

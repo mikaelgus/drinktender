@@ -258,4 +258,47 @@ const useRating = () => {
   return {getRating, postRating, deleteRating};
 };
 
-export {useMedia, useLogin, useUser, useTag, useComment, useRating};
+const useFavourite = () => {
+  const postFavourite = async (data, token) => {
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+    return await fetchJson(baseUrl + 'favourites', fetchOptions);
+  };
+  const deleteFavourite = async (id, token) => {
+    const fetchOptions = {
+      method: 'DELETE',
+      headers: {
+        'x-access-token': token,
+      },
+    };
+    return await fetchJson(baseUrl + 'favourites/file/' + id, fetchOptions);
+  };
+  const getFavourite = async (userId, token) => {
+    const fetchOptions = {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userId),
+    };
+    return await fetchJson(baseUrl + 'favourites', fetchOptions);
+  };
+  return {postFavourite, deleteFavourite, getFavourite};
+};
+
+export {
+  useMedia,
+  useLogin,
+  useUser,
+  useTag,
+  useComment,
+  useRating,
+  useFavourite,
+};
