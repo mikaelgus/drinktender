@@ -12,19 +12,24 @@ import {
   Button,
   CardHeader,
   IconButton,
+  Rating,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
-import {useContext, useEffect} from 'react';
-import {useComment} from '../hooks/ApiHooks';
+import {useContext, useEffect, useState} from 'react';
+import {useComment, useRating} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
-import {EditOutlined, LocalBar, StarBorder} from '@mui/icons-material';
+import {EditOutlined, LocalBar} from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
+  // eslint-disable-next-line no-unused-vars
+  const [ratings, setRatings] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [userRating, setUserRating] = useState(0);
 
   const alkuarvot = {
     comment: '',
@@ -42,6 +47,7 @@ const Single = () => {
   };
 
   const {postComment} = useComment();
+  const {getRating, postRating} = useRating();
 
   const doComment = async () => {
     try {
@@ -57,14 +63,52 @@ const Single = () => {
     }
   };
 
+  const fetchUserRating = async () => {
+    try {
+      const ratingsData = await getRating(file.file_id);
+
+      ratingsData.forEach((rating) => {
+        rating.user_id === user.user_id && setUserRating(rating.rating);
+      });
+
+      const summa = ratingsData.reduce((nro, rating) => {
+        console.log(nro, rating);
+        return nro + rating.rating;
+      }, 0);
+      const ka = summa / ratingsData.length;
+      setRatings(ka);
+    } catch (err) {
+      console.log('fetchRating error ', err);
+    }
+  };
+  console.log(ratings); // Keskiarvo
+
+  const doRating = async (event, newValue) => {
+    setUserRating(newValue);
+    try {
+      const token = localStorage.getItem('token');
+      const data = {file_id: file.file_id, rating: newValue};
+      const ratingData = await postRating(data, token);
+      if (ratingData) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const {inputs, handleInputChange, handleSubmit} = useForm(
     doComment,
     alkuarvot
   );
 
-  useEffect(() => {}, [inputs.file]);
+  useEffect(() => {
+    user && fetchUserRating();
+  }, [inputs.file, user, update]);
 
   const filled = inputs.comment != '';
+
+  // console.log(file);
 
   return (
     <>
@@ -125,7 +169,7 @@ const Single = () => {
               tags:
             </Typography>
             <Typography variant="body1" mb={2}>
-              jotain, vielä, ehkä, tai, kai
+              #lintu, #keitto
             </Typography>
           </CardContent>
         </Card>
@@ -137,11 +181,10 @@ const Single = () => {
                 Review:
               </Typography>
               <Typography variant="body1" mb={2}>
-                <StarBorder />
-                <StarBorder />
-                <StarBorder />
-                <StarBorder />
-                <StarBorder />
+                <Rating value={userRating} onChange={doRating} />
+              </Typography>
+              <Typography variant="body1" mb={2}>
+                {ratings}
               </Typography>
             </CardContent>
           </Card>
