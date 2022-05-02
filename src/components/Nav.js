@@ -39,7 +39,7 @@ const Nav = () => {
     fetchUser();
   }, []);
 
-  // console.log(user, open);
+  console.log('user', user);
 
   return (
     <Box>

@@ -29,7 +29,6 @@ const Profile = () => {
 
   return (
     <>
-      <BackButton />
       <Grid container justifyContent="center">
         <LogoButton />
         <Grid textAlign="center" item xs={10}>
