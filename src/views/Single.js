@@ -37,7 +37,7 @@ const Single = () => {
   const [userRating, setUserRating] = useState(0);
 
   // eslint-disable-next-line no-unused-vars
-  const [selected, setSelected] = useState(false);
+  const [selected, setSelected] = useState();
 
   const alkuarvot = {
     comment: '',
@@ -56,7 +56,7 @@ const Single = () => {
 
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
-  const {postFavourite} = useFavourite();
+  const {postFavourite, getSingleFavourite, deleteFavourite} = useFavourite();
 
   const doComment = async () => {
     try {
@@ -90,7 +90,7 @@ const Single = () => {
       console.log('fetchRating error ', err);
     }
   };
-  console.log(ratings); // Keskiarvo
+  console.log('recipe rating:', ratings); // Keskiarvo
 
   const doRating = async (event, newValue) => {
     setUserRating(newValue);
@@ -119,8 +119,31 @@ const Single = () => {
 
   // console.log(file);
 
+  const isFavourite = async () => {
+    try {
+      const result = await getSingleFavourite(file.file_id);
+      if (result) {
+        console.log('is favourite', result);
+        if (result.length == 0) {
+          console.log('this recipe is not your favourite');
+          setSelected(false);
+        } else {
+          console.log('this recipe is added to your favourites');
+          setSelected(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    user && isFavourite();
+  }, [inputs.file, user, update]);
+
   // eslint-disable-next-line no-unused-vars
   const doFavourite = async () => {
+    console.log('doFavourite');
     try {
       const token = localStorage.getItem('token');
       const data = {file_id: file.file_id};
@@ -132,11 +155,27 @@ const Single = () => {
       console.log(err);
     }
   };
+
+  // eslint-disable-next-line no-unused-vars
+  const delFavourite = () => {
+    try {
+      const token = localStorage.getItem('token');
+      const data = file.file_id;
+      console.log('mitä tämän sisällä', data);
+      const removeFavourite = deleteFavourite(data, token);
+      if (removeFavourite) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const addFav = () => {
-    console.log('add favourite');
+    console.log('added to favourites');
   };
   const delFav = () => {
-    console.log('no favourite');
+    console.log('deleted from favourites');
   };
 
   return (
@@ -224,13 +263,15 @@ const Single = () => {
                   setSelected(!selected);
                   if (selected) {
                     delFav();
+                    delFavourite();
                   }
                   if (!selected) {
                     addFav();
+                    doFavourite();
                   }
                 }}
               >
-                Add to favourites:
+                Add to favourites
                 <CheckCircleOutlineRounded />
               </ToggleButton>
             </CardContent>

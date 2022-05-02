@@ -270,6 +270,7 @@ const useFavourite = () => {
     };
     return await fetchJson(baseUrl + 'favourites', fetchOptions);
   };
+
   const deleteFavourite = async (id, token) => {
     const fetchOptions = {
       method: 'DELETE',
@@ -279,6 +280,11 @@ const useFavourite = () => {
     };
     return await fetchJson(baseUrl + 'favourites/file/' + id, fetchOptions);
   };
+
+  const getSingleFavourite = async (mediaId) => {
+    return await fetchJson(baseUrl + 'favourites/file/' + mediaId);
+  };
+
   const getFavourite = async (userId, token) => {
     const fetchOptions = {
       method: 'GET',
@@ -290,7 +296,7 @@ const useFavourite = () => {
     };
     return await fetchJson(baseUrl + 'favourites', fetchOptions);
   };
-  return {postFavourite, deleteFavourite, getFavourite};
+  return {postFavourite, deleteFavourite, getSingleFavourite, getFavourite};
 };
 
 export {
