@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
-import {Grid, Link} from '@mui/material';
+import {Grid} from '@mui/material';
 import {Typography} from '@mui/material';
 import {Button} from '@mui/material';
 import {ValidatorForm} from 'react-material-ui-form-validator';
@@ -153,9 +153,6 @@ const RegisterForm = ({setToggle}) => {
             validators={validators.full_name}
             errorMessages={errorMessages.full_name}
           />
-          <Link textAlign="center">
-            <Typography mt={1}>Read privacy policy</Typography>
-          </Link>
           <Button
             fullWidth
             sx={{mt: 2, mb: 2}}
