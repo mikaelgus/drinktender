@@ -67,11 +67,10 @@ const Single = () => {
       const ratingsData = await getRating(file.file_id);
 
       ratingsData.forEach((rating) => {
-        rating.user_id === user.user_id && setUserRating(rating.rating);
+        setUserRating(rating.rating);
       });
 
       const summa = ratingsData.reduce((nro, rating) => {
-        console.log(nro, rating);
         return nro + rating.rating;
       }, 0);
       const ka = summa / ratingsData.length;
@@ -80,7 +79,7 @@ const Single = () => {
       console.log('fetchRating error ', err);
     }
   };
-  console.log(ratings); // Keskiarvo
+  // console.log(ratings); // Keskiarvo
 
   const doRating = async (event, newValue) => {
     setUserRating(newValue);
@@ -102,12 +101,10 @@ const Single = () => {
   );
 
   useEffect(() => {
-    user && fetchUserRating();
+    fetchUserRating();
   }, [inputs.file, user, update]);
 
   const filled = inputs.comment != '';
-
-  // console.log(file);
 
   return (
     <>
@@ -173,19 +170,21 @@ const Single = () => {
         </CardContent>
       </Card>
 
-      {user && (
-        <Card sx={{marginTop: '1rem', width: '80vw'}}>
-          <CardContent>
-            <Typography variant="h6" mb={1}>
-              Review:
-            </Typography>
-            <Typography variant="body1" mb={2}>
-              <Rating value={userRating} onChange={doRating} />
-            </Typography>
-            <Typography>{ratings}</Typography>
-          </CardContent>
-        </Card>
-      )}
+      <Card sx={{marginTop: '1rem', width: '80vw'}}>
+        <CardContent>
+          {user && (
+            <>
+              <Typography variant="h6" mb={1}>
+                Review:
+              </Typography>
+              <Typography variant="body1" mb={2}>
+                <Rating value={userRating} onChange={doRating} />
+              </Typography>
+            </>
+          )}
+          Rating: {ratings}
+        </CardContent>
+      </Card>
 
       <Grid container>
         <Typography variant="h3" className="comments-title">
