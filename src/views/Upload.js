@@ -17,8 +17,12 @@ import {BackButton} from '../components/BackButton';
 import {Add, Remove} from '@mui/icons-material';
 
 import BottomNav from '../components/BottomNav';
+import app from '../App';
 
 const Upload = () => {
+  const [selectedTag, setSelectedTag] = useState();
+  const [selectedTag2, setSelectedTag2] = useState();
+  const [selectedTag3, setSelectedTag3] = useState();
   const [logged, setLogged] = useState(false);
   const {getUser} = useUser();
   const [preview, setPreview] = useState('drink175.png');
@@ -50,6 +54,22 @@ const Upload = () => {
   const {postTag} = useTag();
   const navigate = useNavigate();
 
+  const checkNulls = (item) => {
+    if (item == null || item === 0) {
+      return '';
+    } else return item;
+  };
+
+  const addTag = async (userToken, fileId, tag) => {
+    await postTag(
+        {
+          file_id: fileId,
+          tag: JSON.stringify([appID, tag]),
+        },
+        userToken,
+    );
+  };
+
   const doUpload = async () => {
     try {
       console.log('doUpload');
@@ -63,7 +83,19 @@ const Upload = () => {
       formdata.append('title', inputs.title);
       formdata.append('description', JSON.stringify(desc));
       formdata.append('file', inputs.file);
+      checkNulls(selectedTag);
+      checkNulls(selectedTag2);
+      checkNulls(selectedTag3);
+      const data3 = [
+        checkNulls(selectedTag),
+        checkNulls(selectedTag2),
+        checkNulls(selectedTag3),
+      ];
       const mediaData = await postMedia(formdata, token);
+
+      for (let i = 0; i < data3.length; i++) {
+        await addTag(token, mediaData, data3[i]);
+      }
       const tagData = await postTag(
           {
             file_id: mediaData.file_id,
