@@ -15,6 +15,7 @@ import MyFiles from './views/MyFiles';
 import Modify from './views/Modify';
 import EditProfile from './views/EditProfile';
 import Policy from './views/Policy';
+import MyFavourites from './views/MyFavourites';
 
 const theme = createTheme(themeOptions);
 
@@ -37,6 +38,7 @@ const App = () => {
               <Route path="/modify" element={<Modify />} />
               <Route path="/editprofile" element={<EditProfile />} />
               <Route path="/policy" element={<Policy />} />
+              <Route path="/myfavourites" element={<MyFavourites />} />
             </Routes>
           </Container>
         </ThemeProvider>

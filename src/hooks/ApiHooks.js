@@ -285,14 +285,12 @@ const useFavourite = () => {
     return await fetchJson(baseUrl + 'favourites/file/' + mediaId);
   };
 
-  const getFavourite = async (userId, token) => {
+  const getFavourite = async (token) => {
     const fetchOptions = {
       method: 'GET',
       headers: {
         'x-access-token': token,
-        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userId),
     };
     return await fetchJson(baseUrl + 'favourites', fetchOptions);
   };

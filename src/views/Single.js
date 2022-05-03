@@ -161,7 +161,7 @@ const Single = () => {
     try {
       const token = localStorage.getItem('token');
       const data = file.file_id;
-      console.log('mitä tämän sisällä', data);
+
       const removeFavourite = deleteFavourite(data, token);
       if (removeFavourite) {
         setUpdate(!update);

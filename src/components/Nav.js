@@ -16,7 +16,13 @@ import {useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {useUser} from '../hooks/ApiHooks';
-import {Home, AccountCircle, Upload, AccountBox} from '@mui/icons-material';
+import {
+  Home,
+  AccountCircle,
+  Upload,
+  AccountBox,
+  PlaylistAddCheckRounded,
+} from '@mui/icons-material';
 
 const Nav = () => {
   const {user, setUser} = useContext(MediaContext);
@@ -96,6 +102,13 @@ const Nav = () => {
                   <AccountBox />
                 </ListItemIcon>
                 <ListItemText primary="My Files" />
+              </ListItemButton>
+
+              <ListItemButton component={Link} to="/myfavourites">
+                <ListItemIcon>
+                  <PlaylistAddCheckRounded />
+                </ListItemIcon>
+                <ListItemText primary="My Favourites" />
               </ListItemButton>
 
               <ListItemButton component={Link} to="/upload">
