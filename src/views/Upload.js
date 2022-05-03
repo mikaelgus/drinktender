@@ -67,6 +67,13 @@ const Upload = () => {
         },
         token
       );
+      await postTag(
+        {
+          file_id: mediaData.file_id,
+          tag: 'koirat' + appID,
+        },
+        token
+      );
       confirm(tagData.message) && navigate('/home');
     } catch (err) {
       alert(err.message);

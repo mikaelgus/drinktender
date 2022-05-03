@@ -26,9 +26,7 @@ import {EditOutlined, LocalBar} from '@mui/icons-material';
 
 const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
-  // eslint-disable-next-line no-unused-vars
   const [ratings, setRatings] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [userRating, setUserRating] = useState(0);
 
   const alkuarvot = {
