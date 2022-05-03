@@ -1,7 +1,14 @@
 import {
   Button,
+  Checkbox,
   CircularProgress,
+  FormControl,
   Grid,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select,
   Slider,
   Stack,
   Typography,
@@ -13,16 +20,20 @@ import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
-import {BackButton} from '../components/BackButton';
 import {Add, Remove} from '@mui/icons-material';
 
-import BottomNav from '../components/BottomNav';
-import app from '../App';
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const Upload = () => {
-  const [selectedTag, setSelectedTag] = useState();
-  const [selectedTag2, setSelectedTag2] = useState();
-  const [selectedTag3, setSelectedTag3] = useState();
   const [logged, setLogged] = useState(false);
   const {getUser} = useUser();
   const [preview, setPreview] = useState('drink175.png');
@@ -37,6 +48,19 @@ const Upload = () => {
     saturate: 100,
     sepia: 0,
   };
+
+  const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
 
   const validators = {
     title: ['required', 'minStringLength: 2'],
@@ -53,23 +77,17 @@ const Upload = () => {
   const {postMedia, loading} = useMedia();
   const {postTag} = useTag();
   const navigate = useNavigate();
+  const [tags, setTags] = useState([]);
 
-  const checkNulls = (item) => {
-    if (item == null || item === 0) {
-      return '';
-    } else return item;
-  };
-
-  const addTag = async (userToken, fileId, tag) => {
-    await postTag(
-        {
-          file_id: fileId,
-          tag: JSON.stringify([appID, tag]),
-        },
-        userToken,
+  const handleChange = (event) => {
+    const {
+      target: {value},
+    } = event;
+    setTags(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
     );
   };
-
   const doUpload = async () => {
     try {
       console.log('doUpload');
@@ -83,18 +101,17 @@ const Upload = () => {
       formdata.append('title', inputs.title);
       formdata.append('description', JSON.stringify(desc));
       formdata.append('file', inputs.file);
-      checkNulls(selectedTag);
-      checkNulls(selectedTag2);
-      checkNulls(selectedTag3);
-      const data3 = [
-        checkNulls(selectedTag),
-        checkNulls(selectedTag2),
-        checkNulls(selectedTag3),
-      ];
       const mediaData = await postMedia(formdata, token);
-
-      for (let i = 0; i < data3.length; i++) {
-        await addTag(token, mediaData, data3[i]);
+      console.log(mediaData);
+      for (let i = 0; i < tags.length; i++) {
+        const tempTag = tags[i] + appID;
+        await postTag(
+            {
+              file_id: mediaData.file_id,
+              tag: JSON.stringify(tempTag),
+            },
+            token,
+        );
       }
       const tagData = await postTag(
           {
@@ -276,6 +293,28 @@ const Upload = () => {
                   />
                 </Grid>
               </Grid>
+
+              <FormControl sx={{m: 1, width: 300}}>
+                <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                <Select
+                  labelId="demo-multiple-checkbox-label"
+                  id="demo-multiple-checkbox"
+                  multiple
+                  value={tags}
+                  onChange={handleChange}
+                  input={<OutlinedInput label="Tag" />}
+                  renderValue={(selected) => selected.join(', ')}
+                  MenuProps={MenuProps}
+                >
+                  {names.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      <Checkbox checked={tags.indexOf(name) > -1} />
+                      <ListItemText primary={name} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
               <TextValidator
                 fullWidth
                 margin="normal"
@@ -330,11 +369,8 @@ const Upload = () => {
           </Grid>
         </Grid>
       ) : (
-          'Please log in to upload drinks'
-        )
-      }
-
-
+        'Please log in to upload drinks'
+      )}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import {Link, useLocation} from 'react-router-dom';
-import {mediaUrl} from '../utils/variables';
+import {appID, mediaUrl} from '../utils/variables';
 import useForm from '../hooks/FormHooks';
 import {
   Card,
@@ -17,7 +17,7 @@ import {
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
 import {useContext, useEffect, useState} from 'react';
-import {useComment, useRating} from '../hooks/ApiHooks';
+import {useComment, useRating, useTag} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
@@ -25,6 +25,7 @@ import {EditOutlined, LocalBar} from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
+  const [trueTags, setTrueTags] = useState('');
   const {user, update, setUpdate} = useContext(MediaContext);
   // eslint-disable-next-line no-unused-vars
   const [ratings, setRatings] = useState(0);
@@ -39,7 +40,7 @@ const Single = () => {
   console.log('single location', location);
   const file = location.state.file;
   const {description, instructions, filters} = safeParseJson(
-    file.description
+      file.description,
   ) || {
     description: file.description,
     instructions: {},
@@ -48,6 +49,18 @@ const Single = () => {
 
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
+
+  const getFileTags = async () => {
+    const actualTags = [];
+    const tags = await useTag().getTagsOfFile(file.file_id);
+    for (let i = 0; i < tags.length; i++) {
+      if (tags[i].tag !== appID) {
+        const temp = tags[i].tag.slice(0, -appID.length);
+        actualTags.push(temp);
+      }
+    }
+    setTrueTags(actualTags);
+  };
 
   const doComment = async () => {
     try {
@@ -98,11 +111,12 @@ const Single = () => {
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(
-    doComment,
-    alkuarvot
+      doComment,
+      alkuarvot,
   );
 
   useEffect(() => {
+    getFileTags();
     user && fetchUserRating();
   }, [inputs.file, user, update]);
 
@@ -169,7 +183,7 @@ const Single = () => {
               tags:
             </Typography>
             <Typography variant="body1" mb={2}>
-              #lintu, #keitto
+              {trueTags}
             </Typography>
           </CardContent>
         </Card>

@@ -31,9 +31,9 @@ const useMedia = (showAllFiles, userId) => {
       }
 
       const allFiles = await Promise.all(
-        media.map(async (file) => {
-          return await fetchJson(`${baseUrl}media/${file.file_id}`);
-        })
+          media.map(async (file) => {
+            return await fetchJson(`${baseUrl}media/${file.file_id}`);
+          }),
       );
 
       setMediaArray(allFiles);
@@ -203,18 +203,31 @@ const useTag = () => {
     }
   };
 
-  const postTag = async (data, token) => {
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        'x-access-token': token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    };
-    return await fetchJson(baseUrl + 'tags', fetchOptions);
+  const getTagsOfFile = async (id) => {
+    try {
+      const options = {
+        method: 'GET',
+      };
+      return await fetchJson(baseUrl + 'tags/file/' + id, options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
   };
-  return {getTag, postTag};
+
+  const postTag = async (tagAndFileId, token) => {
+    const options = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'x-access-token': token},
+      body: JSON.stringify(tagAndFileId),
+    };
+    try {
+      const result = await fetchJson(baseUrl + 'tags', options);
+      return result;
+    } catch (error) {
+      throw new Error('postTag error: ' + error.message);
+    }
+  };
+  return {getTag, postTag, getTagsOfFile};
 };
 
 const useRating = () => {

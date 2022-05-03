@@ -24,7 +24,7 @@ const BottomNav = () => {
       {mobile && (
         <BottomNavigation
           style={{
-            position: 'absolute',
+            position: 'fixed',
             bottom: 0,
             zIndex: 1000,
             flexDirection: 'row',
