@@ -254,22 +254,6 @@ const Single = () => {
           </CardContent>
         </Card>
 
-        <Card sx={{marginTop: '1rem', width: '80vw'}}>
-          <CardContent>
-            {user && (
-              <>
-                <Typography variant="h6" mb={1}>
-                  Review:
-                </Typography>
-                <Typography variant="body1" mb={2}>
-                  <Rating value={userRating} onChange={doRating} />
-                </Typography>
-              </>
-            )}
-            Rating: {ratings}
-          </CardContent>
-        </Card>
-
         {user && (
           <Card sx={{marginTop: '1rem', width: '80vw'}}>
             <CardContent>
@@ -278,9 +262,7 @@ const Single = () => {
               </Typography>
               <Typography variant="body1" mb={2}>
                 <Rating value={userRating} onChange={doRating} />
-              </Typography>
-              <Typography variant="body1" mb={2}>
-                {ratings}
+                Rating: {ratings}
               </Typography>
               <ToggleButton
                 size="small"
