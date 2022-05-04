@@ -13,15 +13,21 @@ import {
   CardHeader,
   IconButton,
   Rating,
+  ToggleButton,
 } from '@mui/material';
 import {safeParseJson} from '../utils/functions';
 import {BackButton} from '../components/BackButton';
 import {useContext, useEffect, useState} from 'react';
 import {useComment, useRating, useTag} from '../hooks/ApiHooks';
+import {useFavourite} from '../hooks/ApiHooks';
 import {MediaContext} from '../contexts/MediaContext';
 import Comments from '../components/Comments';
 import {ValidatorForm} from 'react-material-ui-form-validator';
-import {EditOutlined, LocalBar} from '@mui/icons-material';
+import {
+  CheckCircleOutlineRounded,
+  EditOutlined,
+  LocalBar,
+} from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
@@ -29,6 +35,9 @@ const Single = () => {
   const {user, update, setUpdate} = useContext(MediaContext);
   const [ratings, setRatings] = useState(0);
   const [userRating, setUserRating] = useState(0);
+
+  // eslint-disable-next-line no-unused-vars
+  const [selected, setSelected] = useState();
 
   const alkuarvot = {
     comment: '',
@@ -47,6 +56,7 @@ const Single = () => {
 
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
+  const {postFavourite, getSingleFavourite, deleteFavourite} = useFavourite();
 
   const getFileTags = async () => {
     const actualTags = [];
@@ -118,6 +128,67 @@ const Single = () => {
   }, [inputs.file, user, update]);
 
   const filled = inputs.comment != '';
+
+  // console.log(file);
+
+  const isFavourite = async () => {
+    try {
+      const result = await getSingleFavourite(file.file_id);
+      if (result) {
+        console.log('is favourite', result);
+        if (result.length == 0) {
+          console.log('this recipe is not your favourite');
+        } else {
+          console.log('this recipe is added to your favourites');
+
+          setSelected(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    user && isFavourite();
+  }, [inputs.file, user, update]);
+
+  // eslint-disable-next-line no-unused-vars
+  const doFavourite = async () => {
+    console.log('doFavourite');
+    try {
+      const token = localStorage.getItem('token');
+      const data = {file_id: file.file_id};
+      const addFavourite = await postFavourite(data, token);
+      if (addFavourite) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const delFavourite = () => {
+    try {
+      const token = localStorage.getItem('token');
+      const data = file.file_id;
+
+      const removeFavourite = deleteFavourite(data, token);
+      if (removeFavourite) {
+        setUpdate(!update);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const addFav = () => {
+    console.log('added to favourites');
+  };
+  const delFav = () => {
+    console.log('deleted from favourites');
+  };
 
   return (
     <>
@@ -211,6 +282,26 @@ const Single = () => {
               <Typography variant="body1" mb={2}>
                 {ratings}
               </Typography>
+              <ToggleButton
+                size="small"
+                color="secondary"
+                value="check"
+                selected={selected}
+                onChange={() => {
+                  setSelected(!selected);
+                  if (selected) {
+                    delFav();
+                    delFavourite();
+                  }
+                  if (!selected) {
+                    addFav();
+                    doFavourite();
+                  }
+                }}
+              >
+                {selected ? 'In favourites ' : 'Add to favourites '}
+                <CheckCircleOutlineRounded />
+              </ToggleButton>
             </CardContent>
           </Card>
         )}
