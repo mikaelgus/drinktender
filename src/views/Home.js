@@ -66,7 +66,7 @@ const Home = () => {
         </Typography>
       </Grid>
 
-      <MediaTable />
+      <MediaTable tags={tags} />
       <BottomNav />
     </>
   );

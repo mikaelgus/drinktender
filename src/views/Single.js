@@ -29,6 +29,7 @@ import {
   LocalBar,
 } from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
+import BottomNav from '../components/BottomNav';
 
 const Single = () => {
   const [trueTags, setTrueTags] = useState([]);
@@ -57,6 +58,7 @@ const Single = () => {
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
   const actualTags = [];
+  const {postFavourite, getSingleFavourite, deleteFavourite} = useFavourite();
 
   const doComment = async () => {
     try {
@@ -327,6 +329,7 @@ const Single = () => {
           </CardContent>
         </Card>
       </Grid>
+      <BottomNav />
     </>
   );
 };

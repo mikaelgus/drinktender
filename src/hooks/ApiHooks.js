@@ -215,19 +215,54 @@ const useTag = () => {
   };
 
   const postTag = async (tagAndFileId, token) => {
+    console.log(JSON.stringify(tagAndFileId));
     const options = {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'x-access-token': token},
       body: JSON.stringify(tagAndFileId),
     };
     try {
-      const result = await fetchJson(baseUrl + 'tags', options);
-      return result;
+      return await fetchJson(baseUrl + 'tags', options);
     } catch (error) {
       throw new Error('postTag error: ' + error.message);
     }
   };
-  return {getTag, postTag, getTagsOfFile};
+
+  const searchWithTags = async (tags) => {
+    const tagMatchFiles = [];
+    const allTrueMatches = [];
+    for (let i = 0; i < tags.length; i++) {
+      const allMatches = [];
+      try {
+        const result = await fetchJson(baseUrl + 'tags/' + tags[i] + appID);
+        allMatches.push(result);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+      for (let j = 0; j < allMatches.length; j++) {
+        for (let k = 0; k < allMatches[j].length; k++) {
+          tagMatchFiles.push(allMatches[j][k]);
+        }
+      }
+    }
+    const filterByCount = (array, count) => {
+      return array.filter(
+        (a, index) =>
+          array.indexOf(a) === index &&
+          array.reduce((acc, b) => +(a === b) + acc, 0) === count
+      );
+    };
+
+    const lookup = tagMatchFiles.reduce((a, e) => {
+      a[e.file_id] = ++a[e.file_id] || 0;
+      return a;
+    }, {});
+
+    console.log(tagMatchFiles.filter((e) => lookup[e.id]));
+
+    console.log(filterByCount(tagMatchFiles, 2));
+  };
+  return {getTag, postTag, getTagsOfFile, searchWithTags};
 };
 
 const useRating = () => {

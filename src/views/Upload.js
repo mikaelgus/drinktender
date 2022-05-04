@@ -83,10 +83,12 @@ const Upload = () => {
       console.log(mediaData);
       for (let i = 0; i < tags.length; i++) {
         const tempTag = tags[i] + appID;
+        console.log("JSON.stringify(tempTag)");
+        console.log(JSON.stringify(tempTag))
         await postTag(
           {
             file_id: mediaData.file_id,
-            tag: JSON.stringify(tempTag),
+            tag: tempTag,
           },
           token
         );
