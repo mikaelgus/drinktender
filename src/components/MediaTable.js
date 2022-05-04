@@ -3,11 +3,12 @@ import {CircularProgress, ImageList} from '@mui/material';
 import {useFavourite, useMedia} from '../hooks/ApiHooks';
 import {useWindowSize} from '../hooks/WindowHooks';
 import MediaRow from './MediaRow';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 
 const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
   const {user} = useContext(MediaContext);
+  const [favouriteArray, setFavouriteArray] = useState([]);
   const {mediaArray, loading, deleteMedia} = useMedia(allFiles, user?.user_id);
   const windowSize = useWindowSize();
   const {getFavourite} = useFavourite();
@@ -17,6 +18,13 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
       const token = localStorage.getItem('token');
       const favouriteResult = await getFavourite(token);
       console.log('favourite list', favouriteResult);
+      const filteredArray = mediaArray.filter((media) => {
+        return favouriteResult.filter((favourite) => {
+          return favourite.file_id == media.file_id;
+        })[0];
+      });
+      console.log(filteredArray);
+      setFavouriteArray(filteredArray);
     } catch (err) {
       console.log(err);
     }
@@ -26,7 +34,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
     favouriteFiles && listFavourites();
   }, [favouriteFiles]);
 
-  console.log('favourite files', favouriteFiles);
+  console.log('favourite files true or false: ', favouriteFiles);
 
   return (
     <>
@@ -38,17 +46,28 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
           cols={windowSize.width > 768 ? 3 : 2}
           gap={8}
         >
-          {mediaArray.map((item, index) => {
-            // console.log(item.file_id);
-            return (
-              <MediaRow
-                key={index}
-                file={item}
-                userId={user ? user.user_id : null}
-                deleteMedia={deleteMedia}
-              />
-            );
-          })}
+          {!favouriteFiles &&
+            mediaArray.map((item, index) => {
+              return (
+                <MediaRow
+                  key={index}
+                  file={item}
+                  userId={user ? user.user_id : null}
+                  deleteMedia={deleteMedia}
+                />
+              );
+            })}
+          {favouriteFiles &&
+            favouriteArray.map((item, index) => {
+              return (
+                <MediaRow
+                  key={index}
+                  file={item}
+                  userId={user ? user.user_id : null}
+                  deleteMedia={deleteMedia}
+                />
+              );
+            })}
         </ImageList>
       )}
     </>

@@ -11,7 +11,6 @@ const MyFavourites = () => {
           My favourites
         </Typography>
       </Grid>
-
       <MediaTable favouriteFiles={true} />
     </>
   );
