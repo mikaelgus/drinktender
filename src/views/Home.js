@@ -8,7 +8,7 @@ const Home = () => {
       <BottomNav />
       <Grid container justifyContent="center">
         <Typography component="h5" variant="h5" mt={1}>
-          Resent posts
+          Recent posts
         </Typography>
       </Grid>
 

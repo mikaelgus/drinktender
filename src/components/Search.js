@@ -1,12 +1,25 @@
-import {IconButton, ImageList, InputBase, Paper} from '@mui/material';
+/* eslint-disable no-unused-vars */
+import {
+  alpha,
+  InputBase,
+  MenuList,
+  MenuItem,
+  styled,
+  Typography,
+  Popover,
+  Box,
+  Paper,
+  IconButton,
+  ListItemText,
+  ImageList,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React, {useState} from 'react';
 import {useMedia, useTag} from '../hooks/ApiHooks';
-import MediaRow from './MediaRow';
 import {appID} from '../utils/variables';
+import SearchList from './SearchList';
 
 function Search() {
-  // eslint-disable-next-line no-unused-vars
   const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState([]);
 
@@ -35,6 +48,8 @@ function Search() {
     } catch (err) {
       // console.log(err);
     }
+    console.log(hakusana);
+
     const fullArray = searchArray.concat(tagArray);
     if (hakusana) {
       setSearch(fullArray);
@@ -42,21 +57,28 @@ function Search() {
   };
 
   return (
-    <Paper>
-      <InputBase
-        placeholder="Search..."
-        onChange={searchFunc}
-        value={searchInput}
-      />
-      <IconButton type="submit" aria-label="search">
-        <SearchIcon />
-      </IconButton>
-      <ImageList variant="masonry" gap={8} onClick={closeFunc}>
+    <>
+      <Paper>
+        <IconButton type="submit" aria-label="search">
+          <SearchIcon />
+        </IconButton>
+        <InputBase
+          placeholder="Search..."
+          onChange={searchFunc}
+          value={searchInput}
+        />
+      </Paper>
+      <ImageList
+        variant="masonry"
+        style={{zIndex: 1}}
+        gap={8}
+        onClick={closeFunc}
+      >
         {search.map((item, index) => {
-          return <MediaRow key={index} file={item} />;
+          return <SearchList key={index} file={item} />;
         })}
       </ImageList>
-    </Paper>
+    </>
   );
 }
 

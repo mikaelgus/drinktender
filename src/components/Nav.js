@@ -59,12 +59,13 @@ const Nav = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Drinktender
           </Typography>
-          <Search placeholder="Search" />
           <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
             {user ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
       </AppBar>
+      <Search placeholder="Search" />
+
       <Drawer
         open={open}
         onClose={() => {
