@@ -9,7 +9,7 @@ import {MediaContext} from '../contexts/MediaContext';
 const MediaTable = ({allFiles = true}) => {
   const {user} = useContext(MediaContext);
   const {mediaArray, loading, deleteMedia} = useMedia(allFiles, user?.user_id);
-  console.log(mediaArray)
+
   const windowSize = useWindowSize();
   return (
     <>

@@ -9,6 +9,7 @@ module.exports = {
     'plugin:react/recommended',
     'google',
     'eslint:recommended',
+    'plugin:prettier/recommended', // remove if using WebStorm
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -19,6 +20,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    'prettier', // remove if using WebStorm
   ],
   rules: {
     'react/jsx-uses-react': 'error',
@@ -27,6 +29,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': [1, {extensions: ['.js', '.jsx']}],
     'require-jsdoc': 0,
+    'prettier/prettier': 'error', // remove if using WebStorm
   },
   settings: {
     react: {

@@ -13,13 +13,14 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import {useMedia, useTag, useUser} from '../hooks/ApiHooks';
+import {useMedia, useTag} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
 import {appID} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
+import {BackButton} from '../components/BackButton';
 import {Add, Remove} from '@mui/icons-material';
 
 const ITEM_HEIGHT = 48;
@@ -79,15 +80,6 @@ const Upload = () => {
   const navigate = useNavigate();
   const [tags, setTags] = useState([]);
 
-  const handleChange = (event) => {
-    const {
-      target: {value},
-    } = event;
-    setTags(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
   const doUpload = async () => {
     try {
       console.log('doUpload');
