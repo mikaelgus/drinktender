@@ -101,7 +101,7 @@ const Upload = () => {
   return (
     <>
       <BackButton />
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" mb={11}>
         <Grid textAlign="center" item xs={10}>
           <Typography component="h5" variant="h5" mt={1} mb={2}>
             Post a recipe

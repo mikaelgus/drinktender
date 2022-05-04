@@ -193,7 +193,7 @@ const Single = () => {
   return (
     <>
       <BackButton />
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" mb={7}>
         <Card sx={{width: '80vw'}}>
           <CardHeader
             avatar={
