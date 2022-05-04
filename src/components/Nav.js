@@ -17,6 +17,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {MediaContext} from '../contexts/MediaContext';
 import {useUser} from '../hooks/ApiHooks';
 import {Home, AccountCircle, Upload, AccountBox} from '@mui/icons-material';
+import Search from './Search';
 
 const Nav = () => {
   const {user, setUser} = useContext(MediaContext);
@@ -60,6 +61,7 @@ const Nav = () => {
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Drinktender
           </Typography>
+          <Search placeholder="Search" />
           <Button component={Link} to={user ? '/logout' : '/'} color="inherit">
             {user ? 'Logout' : 'Login'}
           </Button>

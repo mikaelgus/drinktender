@@ -2,7 +2,6 @@ import MediaTable from '../components/MediaTable';
 import {Grid, Typography} from '@mui/material';
 import BottomNav from '../components/BottomNav';
 
-
 const Home = () => {
   return (
     <>

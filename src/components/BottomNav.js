@@ -1,7 +1,7 @@
 import {BottomNavigation, BottomNavigationAction} from '@mui/material';
 import {AccountCircle, Home, Upload} from '@mui/icons-material';
 import {useEffect, useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const BottomNav = () => {
   const [view, setView] = useState(0);

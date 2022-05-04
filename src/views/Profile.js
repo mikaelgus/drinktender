@@ -20,7 +20,6 @@ import {
   EditOutlined,
   PersonOutline,
 } from '@mui/icons-material';
-import {BackButton} from '../components/BackButton';
 import {Link} from 'react-router-dom';
 import {LogoButton} from '../components/LogoTextButton';
 

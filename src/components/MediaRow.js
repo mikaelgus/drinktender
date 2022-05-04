@@ -12,8 +12,8 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     description: file.description,
     filters: {},
   };
-  console.log("file: ")
-  console.log(file)
+  console.log('file: ');
+  console.log(file);
 
   const {update, setUpdate} = useContext(MediaContext);
   const navigate = useNavigate();
@@ -23,8 +23,8 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     if (ok) {
       try {
         const deleteInfo = deleteMedia(
-            file.file_id,
-            localStorage.getItem('token'),
+          file.file_id,
+          localStorage.getItem('token')
         );
         if (deleteInfo) {
           setUpdate(!update);

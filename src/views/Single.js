@@ -27,9 +27,7 @@ import {TextValidator} from 'react-material-ui-form-validator';
 const Single = () => {
   const [trueTags, setTrueTags] = useState('');
   const {user, update, setUpdate} = useContext(MediaContext);
-  // eslint-disable-next-line no-unused-vars
   const [ratings, setRatings] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [userRating, setUserRating] = useState(0);
 
   const alkuarvot = {
@@ -40,7 +38,7 @@ const Single = () => {
   console.log('single location', location);
   const file = location.state.file;
   const {description, instructions, filters} = safeParseJson(
-      file.description,
+    file.description
   ) || {
     description: file.description,
     instructions: {},
@@ -81,11 +79,10 @@ const Single = () => {
       const ratingsData = await getRating(file.file_id);
 
       ratingsData.forEach((rating) => {
-        rating.user_id === user.user_id && setUserRating(rating.rating);
+        setUserRating(rating.rating);
       });
 
       const summa = ratingsData.reduce((nro, rating) => {
-        console.log(nro, rating);
         return nro + rating.rating;
       }, 0);
       const ka = summa / ratingsData.length;
@@ -94,7 +91,7 @@ const Single = () => {
       console.log('fetchRating error ', err);
     }
   };
-  console.log(ratings); // Keskiarvo
+  // console.log(ratings); // Keskiarvo
 
   const doRating = async (event, newValue) => {
     setUserRating(newValue);
@@ -111,18 +108,16 @@ const Single = () => {
   };
 
   const {inputs, handleInputChange, handleSubmit} = useForm(
-      doComment,
-      alkuarvot,
+    doComment,
+    alkuarvot
   );
 
   useEffect(() => {
     getFileTags();
-    user && fetchUserRating();
+    fetchUserRating();
   }, [inputs.file, user, update]);
 
   const filled = inputs.comment != '';
-
-  // console.log(file);
 
   return (
     <>
@@ -185,6 +180,22 @@ const Single = () => {
             <Typography variant="body1" mb={2}>
               {trueTags}
             </Typography>
+          </CardContent>
+        </Card>
+
+        <Card sx={{marginTop: '1rem', width: '80vw'}}>
+          <CardContent>
+            {user && (
+              <>
+                <Typography variant="h6" mb={1}>
+                  Review:
+                </Typography>
+                <Typography variant="body1" mb={2}>
+                  <Rating value={userRating} onChange={doRating} />
+                </Typography>
+              </>
+            )}
+            Rating: {ratings}
           </CardContent>
         </Card>
 
