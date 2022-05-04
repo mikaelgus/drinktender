@@ -25,7 +25,7 @@ import {EditOutlined, LocalBar} from '@mui/icons-material';
 import {TextValidator} from 'react-material-ui-form-validator';
 
 const Single = () => {
-  const [trueTags, setTrueTags] = useState('');
+  const [trueTags, setTrueTags] = useState([]);
   const {user, update, setUpdate} = useContext(MediaContext);
   const [ratings, setRatings] = useState(0);
   const [userRating, setUserRating] = useState(0);
@@ -47,18 +47,7 @@ const Single = () => {
 
   const {postComment} = useComment();
   const {getRating, postRating} = useRating();
-
-  const getFileTags = async () => {
-    const actualTags = [];
-    const tags = await useTag().getTagsOfFile(file.file_id);
-    for (let i = 0; i < tags.length; i++) {
-      if (tags[i].tag !== appID) {
-        const temp = tags[i].tag.slice(0, -appID.length);
-        actualTags.push(temp);
-      }
-    }
-    setTrueTags(actualTags);
-  };
+  const actualTags = [];
 
   const doComment = async () => {
     try {
@@ -72,6 +61,17 @@ const Single = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getTagsOfFile = async () => {
+    const tags = await useTag().getTagsOfFile(file.file_id);
+    for (let i = 0; i < tags.length; i++) {
+      if (tags[i].tag !== appID) {
+        const temp = tags[i].tag.slice(1, -appID.length - 1);
+        actualTags.push(temp);
+      }
+    }
+    setTrueTags(actualTags);
   };
 
   const fetchUserRating = async () => {
@@ -113,9 +113,12 @@ const Single = () => {
   );
 
   useEffect(() => {
-    getFileTags();
     fetchUserRating();
   }, [inputs.file, user, update]);
+
+  useEffect(async () => {
+    getTagsOfFile();
+  }, []);
 
   const filled = inputs.comment != '';
 
@@ -178,7 +181,9 @@ const Single = () => {
               tags:
             </Typography>
             <Typography variant="body1" mb={2}>
-              {trueTags}
+              {trueTags?.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
             </Typography>
           </CardContent>
         </Card>

@@ -13,14 +13,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import {useMedia, useTag} from '../hooks/ApiHooks';
+import {useMedia, useTag, useUser} from '../hooks/ApiHooks';
 import {useNavigate} from 'react-router-dom';
 import useForm from '../hooks/FormHooks';
 import {useState, useEffect} from 'react';
-import {appID} from '../utils/variables';
+import {appID, categories} from '../utils/variables';
 import {ValidatorForm} from 'react-material-ui-form-validator';
 import {TextValidator} from 'react-material-ui-form-validator';
-import {BackButton} from '../components/BackButton';
 import {Add, Remove} from '@mui/icons-material';
 
 const ITEM_HEIGHT = 48;
@@ -49,19 +48,6 @@ const Upload = () => {
     saturate: 100,
     sepia: 0,
   };
-
-  const categories = [
-    'Alcohol',
-    'Non-alcoholic',
-    'Orange',
-    'Vodka',
-    'Lemon',
-    'Lime',
-    'Milk',
-    'Lactose-free',
-    'Gluten-free',
-    'Vegetarian',
-  ];
 
   const validators = {
     title: ['required', 'minStringLength: 2'],
@@ -98,19 +84,19 @@ const Upload = () => {
       for (let i = 0; i < tags.length; i++) {
         const tempTag = tags[i] + appID;
         await postTag(
-            {
-              file_id: mediaData.file_id,
-              tag: JSON.stringify(tempTag),
-            },
-            token,
+          {
+            file_id: mediaData.file_id,
+            tag: JSON.stringify(tempTag),
+          },
+          token
         );
       }
       const tagData = await postTag(
-          {
-            file_id: mediaData.file_id,
-            tag: appID,
-          },
-          token,
+        {
+          file_id: mediaData.file_id,
+          tag: appID,
+        },
+        token
       );
       confirm(tagData.message) && navigate('/home');
     } catch (err) {
@@ -118,14 +104,24 @@ const Upload = () => {
     }
   };
 
+  const handleChange = (event) => {
+    const {
+      target: {value},
+    } = event;
+    setTags(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    );
+  };
+
   const {inputs, handleInputChange, handleSubmit} = useForm(
-      doUpload,
-      alkuarvot,
+    doUpload,
+    alkuarvot
   );
 
   const {inputs: filterInputs, handleInputChange: handleSliderChange} = useForm(
-      null,
-      filterarvot,
+    null,
+    filterarvot
   );
 
   useEffect(() => {
