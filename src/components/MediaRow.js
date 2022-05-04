@@ -12,8 +12,6 @@ const MediaRow = ({file, userId, deleteMedia}) => {
     description: file.description,
     filters: {},
   };
-  console.log('file: ');
-  console.log(file);
 
   const {update, setUpdate} = useContext(MediaContext);
   const navigate = useNavigate();

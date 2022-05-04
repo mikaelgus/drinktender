@@ -40,8 +40,6 @@ const Nav = () => {
     fetchUser();
   }, []);
 
-  console.log('user', user);
-
   return (
     <Box>
       <AppBar position="static">

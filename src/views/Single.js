@@ -199,22 +199,6 @@ const Single = () => {
           </CardContent>
         </Card>
 
-        {user && (
-          <Card sx={{marginTop: '1rem', width: '80vw'}}>
-            <CardContent>
-              <Typography variant="h6" mb={1}>
-                Review:
-              </Typography>
-              <Typography variant="body1" mb={2}>
-                <Rating value={userRating} onChange={doRating} />
-              </Typography>
-              <Typography variant="body1" mb={2}>
-                {ratings}
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
-
         <Card sx={{marginTop: '1rem', width: '80vw', marginBottom: '2rem'}}>
           <CardContent>
             <Typography variant="h6" className="comments-title" mt={1}>

@@ -33,15 +33,13 @@ function Search() {
     try {
       tagArray = await getTag(hakusana + appID);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
     const fullArray = searchArray.concat(tagArray);
-
-    // setSearch(searchArray);
-    setSearch(fullArray);
+    if (hakusana) {
+      setSearch(fullArray);
+    }
   };
-
-  console.log(search, mediaArray);
 
   return (
     <Paper>
