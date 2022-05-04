@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
+import {DeleteForever} from '@mui/icons-material';
 
 const Comment = ({file, userId, deleteComment}) => {
   const {update, setUpdate} = useContext(MediaContext);
@@ -43,7 +44,7 @@ const Comment = ({file, userId, deleteComment}) => {
             {userId == file.user_id && (
               <>
                 <IconButton variant="contained" onClick={doDelete}>
-                  Delete
+                  <DeleteForever />
                 </IconButton>
               </>
             )}

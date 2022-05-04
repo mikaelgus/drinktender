@@ -26,6 +26,7 @@ const BottomNav = () => {
           style={{
             position: 'fixed',
             bottom: 0,
+            paddingTop: 2,
             zIndex: 1000,
             flexDirection: 'row',
             justifyContent: 'space-around',
