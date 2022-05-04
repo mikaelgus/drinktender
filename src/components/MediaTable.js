@@ -18,14 +18,14 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
     try {
       const token = localStorage.getItem('token');
       const favouriteResult = await getFavourite(token);
-      console.log('favourite list', favouriteResult);
-      console.log('media array', mediaArray);
+      // console.log('favourite list', favouriteResult);
+      // console.log('media array', mediaArray);
       const filteredArray = mediaArray.filter((media) => {
         return favouriteResult.filter((favourite) => {
           return media.file_id == favourite.file_id;
         })[0];
       });
-      console.log(filteredArray);
+      // console.log(filteredArray);
       setFavouriteArray(filteredArray);
     } catch (err) {
       console.log(err);
@@ -36,7 +36,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
     favouriteFiles && listFavourites();
   }, [favouriteFiles, mediaArray]);
 
-  console.log('favourite files true or false: ', favouriteFiles);
+  // console.log('favourite files true or false: ', favouriteFiles);
 
   return (
     <>
@@ -47,6 +47,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
           variant="masonry"
           cols={windowSize.width > 768 ? 3 : 2}
           gap={8}
+          sx={{marginBottom: '5rem'}}
         >
           {!favouriteFiles &&
             mediaArray.map((item, index) => {
