@@ -33,14 +33,14 @@ const Profile = () => {
     <>
       <Grid container justifyContent="center">
         <LogoButton />
-        <Grid textAlign="center" item xs={10}>
+        <Grid textAlign="center" item xs={12}>
           <Typography component="h5" variant="h5" mt={1} mb={2}>
             Profile
           </Typography>
         </Grid>
 
         {user && (
-          <Card sx={{width: '80vw'}}>
+          <Card sx={{width: '95vw'}}>
             <CardHeader
               avatar={
                 <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">

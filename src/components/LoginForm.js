@@ -33,7 +33,7 @@ const LoginForm = () => {
   return (
     <Grid container justifyContent="center">
       <LogoButton />
-      <Grid textAlign="center" item xs={10}>
+      <Grid textAlign="center" item xs={12}>
         <Typography component="h5" variant="h5" mt={1}>
           Login
         </Typography>

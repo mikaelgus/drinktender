@@ -73,9 +73,12 @@ const EditProfile = () => {
       <BackButton />
       <Grid container justifyContent="center">
         <LogoButton />
-        <Grid textAlign="center" item xs={10}>
+        <Grid textAlign="center" item xs={12}>
           <Typography component="h5" variant="h5" mt={1}>
             Edit your profile
+          </Typography>
+          <Typography component="h6" variant="h6" mt={1}>
+            (If you edit your profile, please log in again)
           </Typography>
         </Grid>
 
