@@ -49,17 +49,17 @@ const Upload = () => {
     sepia: 0,
   };
 
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
+  const categories = [
+    'Alcohol',
+    'Non-alcoholic',
+    'Orange',
+    'Vodka',
+    'Lemon',
+    'Lime',
+    'Milk',
+    'Lactose-free',
+    'Gluten-free',
+    'Vegetarian',
   ];
 
   const validators = {
@@ -306,7 +306,7 @@ const Upload = () => {
                   renderValue={(selected) => selected.join(', ')}
                   MenuProps={MenuProps}
                 >
-                  {names.map((name) => (
+                  {categories.map((name) => (
                     <MenuItem key={name} value={name}>
                       <Checkbox checked={tags.indexOf(name) > -1} />
                       <ListItemText primary={name} />
