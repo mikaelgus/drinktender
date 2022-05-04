@@ -126,9 +126,9 @@ const Single = () => {
         console.log('is favourite', result);
         if (result.length == 0) {
           console.log('this recipe is not your favourite');
-          setSelected(false);
         } else {
           console.log('this recipe is added to your favourites');
+
           setSelected(true);
         }
       }
@@ -271,7 +271,7 @@ const Single = () => {
                   }
                 }}
               >
-                Add to favourites
+                {selected ? 'In favourites ' : 'Add to favourites '}
                 <CheckCircleOutlineRounded />
               </ToggleButton>
             </CardContent>

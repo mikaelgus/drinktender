@@ -18,9 +18,10 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
       const token = localStorage.getItem('token');
       const favouriteResult = await getFavourite(token);
       console.log('favourite list', favouriteResult);
+      console.log('media array', mediaArray);
       const filteredArray = mediaArray.filter((media) => {
         return favouriteResult.filter((favourite) => {
-          return favourite.file_id == media.file_id;
+          return media.file_id == favourite.file_id;
         })[0];
       });
       console.log(filteredArray);
@@ -32,7 +33,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false}) => {
 
   useEffect(() => {
     favouriteFiles && listFavourites();
-  }, [favouriteFiles]);
+  }, [favouriteFiles, mediaArray]);
 
   console.log('favourite files true or false: ', favouriteFiles);
 
