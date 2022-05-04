@@ -215,6 +215,9 @@ const Upload = () => {
               </Grid>
 
               <Grid container justifyContent="center">
+                <Typography fullWidth variant="h6" mt={2.3} mr={2}>
+                  Select a picture:
+                </Typography>
                 <TextValidator
                   margin="normal"
                   size="small"
@@ -231,7 +234,7 @@ const Upload = () => {
               fullWidth
               margin="normal"
               size="small"
-              placeholder="title"
+              placeholder="give a title"
               name="title"
               onChange={handleInputChange}
               value={inputs.title}
@@ -243,7 +246,7 @@ const Upload = () => {
               fullWidth
               margin="normal"
               size="small"
-              placeholder="ingredients"
+              placeholder="write ingredients"
               name="description"
               style={{whiteSpace: 'pre-wrap'}}
               onChange={handleInputChange}
@@ -256,7 +259,7 @@ const Upload = () => {
               fullWidth
               margin="normal"
               size="small"
-              placeholder="instructions"
+              placeholder="write instructions (optional)"
               name="instructions"
               style={{whiteSpace: 'pre-wrap'}}
               onChange={handleInputChange}
