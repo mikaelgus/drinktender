@@ -58,7 +58,7 @@ function Search() {
 
   return (
     <>
-      <Paper>
+      <Paper sx={{marginTop: '1rem'}}>
         <IconButton type="submit" aria-label="search">
           <SearchIcon />
         </IconButton>
