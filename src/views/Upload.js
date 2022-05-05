@@ -289,8 +289,10 @@ const Upload = () => {
                 </Grid>
               </Grid>
 
-              <FormControl sx={{m: 1, width: 300}}>
-                <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+              <FormControl sx={{mb: 1, mt: 2}} size="small" fullWidth>
+                <InputLabel id="demo-multiple-checkbox-label">
+                  select a tag(s)
+                </InputLabel>
                 <Select
                   labelId="demo-multiple-checkbox-label"
                   id="demo-multiple-checkbox"
