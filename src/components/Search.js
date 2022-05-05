@@ -44,6 +44,7 @@ function Search() {
 
   return (
     <>
+<<<<<<< HEAD
       <Paper
         sx={{
           display: 'flex',
@@ -52,6 +53,12 @@ function Search() {
           marginTop: '0.5rem',
         }}
       >
+=======
+      <Paper sx={{marginTop: '1rem'}}>
+        <IconButton type="submit" aria-label="search">
+          <SearchIcon />
+        </IconButton>
+>>>>>>> 72d82c0fc0278642cdb0f9c6d6285e54e499268c
         <InputBase
           placeholder="Search..."
           sx={{width: '100%', paddingLeft: '1rem'}}
