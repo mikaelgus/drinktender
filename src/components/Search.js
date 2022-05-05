@@ -1,4 +1,4 @@
-import {InputBase, Paper, IconButton, ImageList, List} from '@mui/material';
+import {InputBase, Paper, IconButton, List} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import React, {useState} from 'react';
 import {useMedia, useTag} from '../hooks/ApiHooks';
@@ -65,34 +65,36 @@ function Search() {
         >
           <SearchIcon />
         </IconButton>
+        <List
+          variant="masonry"
+          sx={{
+            zIndex: 10,
+            position: 'absolute',
+            backgroundColor: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 'auto',
+            marginTop: '2.6rem',
+            left: '0',
+            right: '0',
+            width: 'inherit',
+            maxWidth: '50%',
+            maxHeight: '50%',
+          }}
+          gap={8}
+          onClick={closeFunc}
+        >
+          {search.map((item, index) => {
+            return (
+              <>
+                <List>
+                  <SearchList key={index} file={item} />
+                </List>
+              </>
+            );
+          })}
+        </List>
       </Paper>
-      <ImageList
-        variant="masonry"
-        sx={{
-          zIndex: 10,
-          position: 'absolute',
-          backgroundColor: 'white',
-          display: 'flex',
-          flexDirection: 'column',
-          margin: 'auto',
-          left: '0',
-          right: '0',
-          width: '70%',
-          maxHeight: '50%',
-        }}
-        gap={8}
-        onClick={closeFunc}
-      >
-        {search.map((item, index) => {
-          return (
-            <>
-              <List>
-                <SearchList key={index} file={item} />
-              </List>
-            </>
-          );
-        })}
-      </ImageList>
     </>
   );
 }
