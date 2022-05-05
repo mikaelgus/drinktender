@@ -21,8 +21,6 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
   const {searchWithTags} = useTag();
 
   const listFiltered = async () => {
-    console.log('I was summoned');
-
     const results = [];
     try {
       const searchData = await searchWithTags(tags);
@@ -34,7 +32,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
       }
       setFilteredTagArray(results);
     } catch (error) {
-      console.error(error.message);
+      // console.error(error.message);
     }
   };
 
@@ -109,6 +107,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
 MediaTable.propTypes = {
   allFiles: PropTypes.bool,
   favouriteFiles: PropTypes.bool,
+  tags: PropTypes.any,
 };
 
 export default MediaTable;

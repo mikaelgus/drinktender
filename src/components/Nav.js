@@ -11,6 +11,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import {useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
@@ -50,18 +51,20 @@ const Nav = () => {
     <Box>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{mr: 2}}
-            onClick={() => {
-              setOpen(!open);
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {window.innerWidth >= 600 && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{mr: 2}}
+              onClick={() => {
+                setOpen(!open);
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
             Drinktender
           </Typography>
@@ -71,56 +74,58 @@ const Nav = () => {
         </Toolbar>
       </AppBar>
       <Search placeholder="Search" sx={{marginTop: '1rem'}} />
-      <Drawer
-        open={open}
-        onClose={() => {
-          setOpen(!open);
-        }}
-      >
-        <List
-          onClick={() => {
+      {window.innerWidth >= 600 && (
+        <Drawer
+          open={open}
+          onClose={() => {
             setOpen(!open);
           }}
         >
-          <ListItemButton component={Link} to={'/home'}>
-            <ListItemIcon>
-              <Home />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-          {user && (
-            <>
-              <ListItemButton component={Link} to="/profile">
-                <ListItemIcon>
-                  <AccountCircle />
-                </ListItemIcon>
-                <ListItemText primary="Profile" />
-              </ListItemButton>
+          <List
+            onClick={() => {
+              setOpen(!open);
+            }}
+          >
+            <ListItemButton component={Link} to={'/home'}>
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+            {user && (
+              <>
+                <ListItemButton component={Link} to="/profile">
+                  <ListItemIcon>
+                    <AccountCircle />
+                  </ListItemIcon>
+                  <ListItemText primary="Profile" />
+                </ListItemButton>
 
-              <ListItemButton component={Link} to="/myfiles">
-                <ListItemIcon>
-                  <AccountBox />
-                </ListItemIcon>
-                <ListItemText primary="My Files" />
-              </ListItemButton>
+                <ListItemButton component={Link} to="/myfiles">
+                  <ListItemIcon>
+                    <AccountBox />
+                  </ListItemIcon>
+                  <ListItemText primary="My Files" />
+                </ListItemButton>
 
-              <ListItemButton component={Link} to="/myfavourites">
-                <ListItemIcon>
-                  <PlaylistAddCheckRounded />
-                </ListItemIcon>
-                <ListItemText primary="My Favourites" />
-              </ListItemButton>
+                <ListItemButton component={Link} to="/myfavourites">
+                  <ListItemIcon>
+                    <PlaylistAddCheckRounded />
+                  </ListItemIcon>
+                  <ListItemText primary="My Favourites" />
+                </ListItemButton>
 
-              <ListItemButton component={Link} to="/upload">
-                <ListItemIcon>
-                  <Upload />
-                </ListItemIcon>
-                <ListItemText primary="Upload" />
-              </ListItemButton>
-            </>
-          )}
-        </List>
-      </Drawer>
+                <ListItemButton component={Link} to="/upload">
+                  <ListItemIcon>
+                    <Upload />
+                  </ListItemIcon>
+                  <ListItemText primary="Upload" />
+                </ListItemButton>
+              </>
+            )}
+          </List>
+        </Drawer>
+      )}
     </Box>
   );
 };

@@ -50,11 +50,12 @@ function Search() {
           width: '75%',
           margin: 'auto',
           marginTop: '0.5rem',
+          marginBottom: '1rem',
         }}
       >
         <InputBase
           placeholder="Search..."
-          sx={{width: '100%', paddingLeft: '1rem'}}
+          sx={{flex: '1', paddingLeft: '1rem'}}
           onChange={searchFunc}
           value={searchInput}
         />
@@ -65,11 +66,12 @@ function Search() {
         >
           <SearchIcon />
         </IconButton>
+
         <List
           variant="masonry"
           sx={{
-            zIndex: 10,
             position: 'absolute',
+            zIndex: 10,
             backgroundColor: 'white',
             display: 'flex',
             flexDirection: 'column',
@@ -77,8 +79,8 @@ function Search() {
             marginTop: '2.6rem',
             left: '0',
             right: '0',
-            width: 'inherit',
-            maxWidth: '50%',
+            width: '70%',
+            maxWidth: '70%',
             maxHeight: '50%',
           }}
           gap={8}

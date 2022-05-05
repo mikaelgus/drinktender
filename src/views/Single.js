@@ -225,8 +225,6 @@ const Single = () => {
             src={mediaUrl + file.thumbnails.w320}
             alt={file.title}
             sx={{
-              height: '15vh',
-              width: '100%',
               filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)

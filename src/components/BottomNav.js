@@ -9,7 +9,7 @@ const BottomNav = () => {
   const [view, setView] = useState(0);
   const [mobile, setMobile] = useState(false);
   const getWidth = () => {
-    console.log('Width: ' + window.innerWidth);
+    // console.log('Width: ' + window.innerWidth);
     if (window.innerWidth > 1450) {
       setMobile(false);
     } else {
