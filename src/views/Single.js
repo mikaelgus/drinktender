@@ -78,7 +78,7 @@ const Single = () => {
     const tags = await useTag().getTagsOfFile(file.file_id);
     for (let i = 0; i < tags.length; i++) {
       if (tags[i].tag !== appID) {
-        const temp = tags[i].tag.slice(1, -appID.length - 1);
+        const temp = tags[i].tag.slice(0, -appID.length);
         actualTags.push(temp);
       }
     }

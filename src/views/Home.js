@@ -65,8 +65,11 @@ const Home = () => {
           Recent posts
         </Typography>
       </Grid>
-
-      <MediaTable tags={tags} />
+      {tags.length === 0 ? (
+        <MediaTable />
+      ) : (
+        <MediaTable allFiles={false} favouriteFiles={false} tags={tags} />
+      )}
       <BottomNav />
     </>
   );

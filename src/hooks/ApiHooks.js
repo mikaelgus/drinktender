@@ -43,6 +43,9 @@ const useMedia = (showAllFiles, userId) => {
       setLoading(false);
     }
   };
+  const getFile = async (id) => {
+    return await fetchJson(`${baseUrl}media/${id}`);
+  };
 
   useEffect(() => {
     getMedia();
@@ -91,7 +94,7 @@ const useMedia = (showAllFiles, userId) => {
     }
   };
 
-  return {mediaArray, postMedia, deleteMedia, putMedia, loading};
+  return {mediaArray, postMedia, deleteMedia, putMedia, loading, getFile};
 };
 
 const useUser = () => {
@@ -230,7 +233,7 @@ const useTag = () => {
 
   const searchWithTags = async (tags) => {
     const tagMatchFiles = [];
-    const allTrueMatches = [];
+    let allTrueMatches = [];
     for (let i = 0; i < tags.length; i++) {
       const allMatches = [];
       try {
@@ -245,22 +248,34 @@ const useTag = () => {
         }
       }
     }
-    const filterByCount = (array, count) => {
-      return array.filter(
-        (a, index) =>
-          array.indexOf(a) === index &&
-          array.reduce((acc, b) => +(a === b) + acc, 0) === count
-      );
+
+    const onlyUnique = (value, index, self) => {
+      return self.indexOf(value) === index;
     };
 
-    const lookup = tagMatchFiles.reduce((a, e) => {
-      a[e.file_id] = ++a[e.file_id] || 0;
-      return a;
-    }, {});
+    const getOccurrence = (array, value) => {
+      return array.filter((v) => v === value).length;
+    };
 
-    console.log(tagMatchFiles.filter((e) => lookup[e.id]));
-
-    console.log(filterByCount(tagMatchFiles, 2));
+    const filterByCount = (array, count) => {
+      console.log(count);
+      // Get file_id:s of files so we can compare them
+      const result = array.map((a) => a.file_id);
+      console.log(result);
+      for (let m = 0; m < result.length; m++) {
+        // How many times each file_id is in array
+        const occurrence = getOccurrence(result, result[m]);
+        // If file_id is not in array as many times as there are tags,
+        // remove the file_id from array
+        if (occurrence === count) {
+          allTrueMatches.push(result[m]);
+        }
+      }
+      // Make copy of result array with only unique values
+      allTrueMatches = allTrueMatches.filter(onlyUnique);
+    };
+    filterByCount(tagMatchFiles, tags.length);
+    return allTrueMatches;
   };
   return {getTag, postTag, getTagsOfFile, searchWithTags};
 };

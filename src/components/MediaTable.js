@@ -10,7 +10,10 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
   const {user} = useContext(MediaContext);
   const [favouriteArray, setFavouriteArray] = useState([]);
   const [filteredTagArray, setFilteredTagArray] = useState([]);
-  const {mediaArray, loading, deleteMedia} = useMedia(allFiles, user?.user_id);
+  const {mediaArray, loading, deleteMedia, getFile} = useMedia(
+    allFiles,
+    user?.user_id
+  );
   const token = localStorage.getItem('token');
 
   const windowSize = useWindowSize();
@@ -18,26 +21,29 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
   const {searchWithTags} = useTag();
 
   const listFiltered = async () => {
-    tags = ['Alcohol', 'Non-alcoholic'];
-    console.log(tags);
+    console.log('I was summoned');
+
+    const results = [];
     try {
       const searchData = await searchWithTags(tags);
       console.log(searchData);
-      // setMediaArray(searchData);
+      for (let n = 0; n < searchData.length; n++) {
+        console.log(searchData[n]);
+        const temp = await getFile(searchData[n]);
+        results.push(temp);
+      }
+      setFilteredTagArray(results);
     } catch (error) {
       console.error(error.message);
     }
-    return mediaArray;
   };
 
   const listFavourites = async () => {
     try {
       const favouriteResult = await getFavourite(token);
-      console.log('favourite list', favouriteResult);
-      console.log('media array', mediaArray);
       const filteredArray = mediaArray.filter((media) => {
         return favouriteResult.filter((favourite) => {
-          return media.file_id == favourite.file_id;
+          return media.file_id === favourite.file_id;
         })[0];
       });
       console.log(filteredArray);
@@ -50,10 +56,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
   useEffect(() => {
     listFiltered();
     favouriteFiles && listFavourites();
-  }, [favouriteFiles, mediaArray]);
-
-  console.log('favourite files true or false: ', favouriteFiles);
-
+  }, [favouriteFiles, mediaArray, tags]);
   return (
     <>
       {loading ? (
@@ -64,39 +67,38 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
           cols={windowSize.width > 768 ? 3 : 2}
           gap={8}
         >
-          {!favouriteFiles &&
-            mediaArray.map((item, index) => {
-              return (
-                <MediaRow
-                  key={index}
-                  file={item}
-                  userId={user ? user.user_id : null}
-                  deleteMedia={deleteMedia}
-                />
-              );
-            })}
-          {favouriteFiles &&
-            favouriteArray.map((item, index) => {
-              return (
-                <MediaRow
-                  key={index}
-                  file={item}
-                  userId={user ? user.user_id : null}
-                  deleteMedia={deleteMedia}
-                />
-              );
-            })}
-          {tags !== null &&
-            filteredTagArray.map((item, index) => {
-              return (
-                <MediaRow
-                  key={index}
-                  file={item}
-                  userId={user ? user.user_id : null}
-                  deleteMedia={deleteMedia}
-                />
-              );
-            })}
+          {favouriteFiles
+            ? favouriteArray.map((item, index) => {
+                return (
+                  <MediaRow
+                    key={index}
+                    file={item}
+                    userId={user ? user.user_id : null}
+                    deleteMedia={deleteMedia}
+                  />
+                );
+              })
+            : tags !== null && !favouriteFiles
+            ? filteredTagArray.map((item, index) => {
+                return (
+                  <MediaRow
+                    key={index}
+                    file={item}
+                    userId={user ? user.user_id : null}
+                    deleteMedia={deleteMedia}
+                  />
+                );
+              })
+            : mediaArray.map((item, index) => {
+                return (
+                  <MediaRow
+                    key={index}
+                    file={item}
+                    userId={user ? user.user_id : null}
+                    deleteMedia={deleteMedia}
+                  />
+                );
+              })}
         </ImageList>
       )}
     </>
