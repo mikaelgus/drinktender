@@ -45,7 +45,7 @@ const Single = () => {
   };
 
   const location = useLocation();
-  console.log('single location', location);
+  // console.log('single location', location);
   const file = location.state.file;
   const {description, instructions, filters} = safeParseJson(
     file.description
@@ -194,10 +194,12 @@ const Single = () => {
     console.log('deleted from favourites');
   };
 
+  // const logged = user
+
   return (
     <>
       <BackButton />
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" mb={7}>
         <Card sx={{width: '80vw'}}>
           <CardHeader
             avatar={

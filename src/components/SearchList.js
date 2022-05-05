@@ -1,16 +1,14 @@
-import {List, ListItem, ListItemButton, ListItemText} from '@mui/material';
+import {ListItem, ListItemButton, ListItemText} from '@mui/material';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 const SearchList = ({file}) => {
   return (
-    <List key={file.file_id} component={Link} to={'/single'} state={{file}}>
-      <ListItem key={file.file_id} component="div" disablePadding>
-        <ListItemButton>
-          <ListItemText primary={file.title} />
-        </ListItemButton>
-      </ListItem>
-    </List>
+    <ListItem key={file.file_id} component="div" disablePadding>
+      <ListItemButton component={Link} to={'/single'} state={{file}}>
+        <ListItemText primary={file.title} />
+      </ListItemButton>
+    </ListItem>
   );
 };
 SearchList.propTypes = {

@@ -66,6 +66,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
           variant="masonry"
           cols={windowSize.width > 768 ? 3 : 2}
           gap={8}
+          sx={{marginBottom: '5rem'}}
         >
           {favouriteFiles
             ? favouriteArray.map((item, index) => {

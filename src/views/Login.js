@@ -8,7 +8,7 @@ const Login = () => {
   return (
     <>
       {toggle ? <LoginForm /> : <RegisterForm setToggle={setToggle} />}
-      <Grid container justifyContent="center">
+      <Grid container justifyContent="center" mb={11}>
         <Button
           color="primary"
           variant="outlined"

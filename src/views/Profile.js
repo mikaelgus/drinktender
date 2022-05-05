@@ -2,6 +2,7 @@ import {useContext} from 'react';
 import {MediaContext} from '../contexts/MediaContext';
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -14,30 +15,34 @@ import {
   Typography,
 } from '@mui/material';
 import {
+  AccountBox,
   AccountCircle,
   Badge,
   ContactMail,
   EditOutlined,
   PersonOutline,
+  PlaylistAddCheckCircleRounded,
 } from '@mui/icons-material';
 import {Link} from 'react-router-dom';
 import {LogoButton} from '../components/LogoTextButton';
+import {BackButton} from '../components/BackButton';
 
 const Profile = () => {
   const {user} = useContext(MediaContext);
 
   return (
     <>
+      <BackButton />
       <Grid container justifyContent="center">
         <LogoButton />
-        <Grid textAlign="center" item xs={10}>
+        <Grid textAlign="center" item xs={12}>
           <Typography component="h5" variant="h5" mt={1} mb={2}>
             Profile
           </Typography>
         </Grid>
 
         {user && (
-          <Card sx={{width: '80vw'}}>
+          <Card sx={{width: '95vw'}}>
             <CardHeader
               avatar={
                 <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
@@ -76,6 +81,27 @@ const Profile = () => {
             </CardContent>
           </Card>
         )}
+      </Grid>
+      <Grid container justifyContent="center" mt={5}>
+        <Button
+          size="small"
+          variant="outlined"
+          sx={{marginRight: '1rem'}}
+          component={Link}
+          to={'/myfiles'}
+        >
+          <AccountBox />
+          <Typography>My files</Typography>
+        </Button>
+        <Button
+          size="small"
+          variant="outlined"
+          component={Link}
+          to={'/myfavourites'}
+        >
+          <PlaylistAddCheckCircleRounded />
+          <Typography>My favourites</Typography>
+        </Button>
       </Grid>
     </>
   );

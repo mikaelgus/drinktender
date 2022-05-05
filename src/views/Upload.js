@@ -156,13 +156,14 @@ const Upload = () => {
 
   return (
     <>
+      <BackButton />
       {logged ? (
-        <Grid container justifyContent="center" sx={{marginBottom: '2rem'}}>
-          <Grid textAlign="center" item xs={10}>
-            <Typography component="h5" variant="h5" mt={1} mb={2}>
-              Post a recipe
-            </Typography>
-          </Grid>
+        <Grid container justifyContent="center" mb={11}>
+        <Grid textAlign="center" item xs={10}>
+          <Typography component="h5" variant="h5" mt={1} mb={2}>
+            Post a recipe
+          </Typography>
+        </Grid>
 
           <Grid item xs={10}>
             <ValidatorForm onSubmit={handleSubmit}>
@@ -248,30 +249,33 @@ const Upload = () => {
                   </Stack>
                 </Grid>
 
-                <Grid item xs={10}>
-                  <Typography variant="subtitle2">sepia</Typography>
-                  <Stack
-                    spacing={1}
-                    direction="row"
-                    sx={{mb: 1}}
-                    alignItems="center"
-                  >
-                    <Remove />
-                    <Slider
-                      name="sepia"
-                      min={0}
-                      max={100}
-                      step={1}
-                      // valueLabelDisplay="on"
-                      onChange={handleSliderChange}
-                      value={filterInputs.sepia}
-                    />
-                    <Add />
-                  </Stack>
-                </Grid>
+              <Grid item xs={10}>
+                <Typography variant="subtitle2">sepia</Typography>
+                <Stack
+                  spacing={1}
+                  direction="row"
+                  sx={{mb: 1}}
+                  alignItems="center"
+                >
+                  <Remove />
+                  <Slider
+                    name="sepia"
+                    min={0}
+                    max={100}
+                    step={1}
+                    // valueLabelDisplay="on"
+                    onChange={handleSliderChange}
+                    value={filterInputs.sepia}
+                  />
+                  <Add />
+                </Stack>
+              </Grid>
 
                 <Grid container justifyContent="center">
-                  <TextValidator
+                  <Typography fullWidth variant="h6" mt={2.3} mr={2}>
+                  Select a picture:
+                </Typography>
+                <TextValidator
                     margin="normal"
                     size="small"
                     type="file"
@@ -309,7 +313,7 @@ const Upload = () => {
                 fullWidth
                 margin="normal"
                 size="small"
-                placeholder="title"
+                placeholder="give a title"
                 name="title"
                 onChange={handleInputChange}
                 value={inputs.title}
@@ -321,7 +325,7 @@ const Upload = () => {
                 fullWidth
                 margin="normal"
                 size="small"
-                placeholder="ingredients"
+                placeholder="write ingredients"
                 name="description"
                 style={{whiteSpace: 'pre-wrap'}}
                 onChange={handleInputChange}
@@ -334,30 +338,30 @@ const Upload = () => {
                 fullWidth
                 margin="normal"
                 size="small"
-                placeholder="instructions"
+                placeholder="write instructions (optional)"
                 name="instructions"
                 style={{whiteSpace: 'pre-wrap'}}
                 onChange={handleInputChange}
                 value={inputs.instructions}
               />
 
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                <Button
-                  disabled={!allFilled}
-                  fullWidth
-                  color="primary"
-                  type="submit"
-                  variant="contained"
-                  sx={{marginTop: '2rem'}}
-                >
-                  Post
-                </Button>
-              )}
-            </ValidatorForm>
-          </Grid>
+            {loading ? (
+              <CircularProgress />
+            ) : (
+              <Button
+                disabled={!allFilled}
+                fullWidth
+                color="primary"
+                type="submit"
+                variant="contained"
+                sx={{marginTop: '2rem'}}
+              >
+                Post
+              </Button>
+            )}
+          </ValidatorForm>
         </Grid>
+      </Grid>
       ) : (
         'Please log in to upload drinks'
       )}

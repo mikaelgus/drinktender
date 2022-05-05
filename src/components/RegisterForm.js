@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
 import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
@@ -82,7 +81,7 @@ const RegisterForm = ({setToggle}) => {
   return (
     <Grid container justifyContent="center">
       <LogoButton />
-      <Grid textAlign="center" item xs={10}>
+      <Grid textAlign="center" item xs={12}>
         <Typography component="h5" variant="h5" mt={1}>
           Register
         </Typography>
