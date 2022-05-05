@@ -252,9 +252,9 @@ const Single = () => {
 
           <CardContent sx={{background: '#f9f9f9'}}>
             <Typography variant="h6" mb={1}>
-              tags:
+              Tags:
             </Typography>
-            <Typography variant="body1" mb={2}>
+            <Typography variant="body1" ml={2}>
               {trueTags?.map((i) => (
                 <li key={i}>{i}</li>
               ))}
