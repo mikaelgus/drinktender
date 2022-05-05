@@ -62,7 +62,7 @@ const MediaTable = ({allFiles = true, favouriteFiles = false, tags = null}) => {
       ) : (
         <ImageList
           variant="masonry"
-          cols={windowSize.width > 768 ? 3 : 2}
+          cols={windowSize.width > 768 ? 4 : 2}
           gap={8}
           sx={{marginBottom: '5rem'}}
         >

@@ -66,7 +66,7 @@ const Single = () => {
       const data = {file_id: file.file_id, comment: inputs.comment};
       const commentData = await postComment(data, token);
       if (commentData) {
-        // Kommentti listan päivitys
+        // Kommentti listan pÃ¤ivitys
         setUpdate(!update);
       }
     } catch (err) {
@@ -200,7 +200,7 @@ const Single = () => {
     <>
       <BackButton />
       <Grid container justifyContent="center" mb={7}>
-        <Card sx={{width: '80vw'}}>
+        <Card sx={{width: '95vw'}}>
           <CardHeader
             avatar={
               <Avatar sx={{bgcolor: '#BDA243'}} aria-label="recipe">
@@ -225,6 +225,8 @@ const Single = () => {
             src={mediaUrl + file.thumbnails.w320}
             alt={file.title}
             sx={{
+              width: '50%',
+              margin: 'auto',
               filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)
@@ -261,14 +263,13 @@ const Single = () => {
         </Card>
 
         {user && (
-          <Card sx={{marginTop: '1rem', width: '80vw'}}>
+          <Card sx={{marginTop: '1rem', width: '95vw'}}>
             <CardContent>
               <Typography variant="h6" mb={1}>
-                Review:
+                Rating: {ratings}
               </Typography>
               <Typography variant="body1" mb={2}>
                 <Rating value={userRating} onChange={doRating} />
-                Rating: {ratings}
               </Typography>
               <ToggleButton
                 size="small"
@@ -294,7 +295,7 @@ const Single = () => {
           </Card>
         )}
 
-        <Card sx={{marginTop: '1rem', width: '80vw', marginBottom: '2rem'}}>
+        <Card sx={{marginTop: '1rem', width: '95vw', marginBottom: '2rem'}}>
           <CardContent>
             <Typography variant="h6" className="comments-title" mt={1}>
               Comments:
