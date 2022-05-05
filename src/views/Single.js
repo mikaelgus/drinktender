@@ -190,6 +190,8 @@ const Single = () => {
     console.log('deleted from favourites');
   };
 
+  // const logged = user
+
   return (
     <>
       <BackButton />

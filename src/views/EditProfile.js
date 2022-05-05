@@ -10,7 +10,7 @@ import {useUser} from '../hooks/ApiHooks';
 import useForm from '../hooks/FormHooks';
 
 const EditProfile = () => {
-  const {user} = useContext(MediaContext);
+  const {user, update, setUpdate} = useContext(MediaContext);
 
   const alkuarvot = {
     username: user.username,
@@ -47,6 +47,7 @@ const EditProfile = () => {
       delete inputs.confirm;
       const userData = await putUser(inputs, token);
       confirm(userData.message) && navigate('/profile');
+      setUpdate(!update);
     } catch (err) {
       alert(err.message);
     }

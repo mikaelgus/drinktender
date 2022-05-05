@@ -26,7 +26,7 @@ import {
 } from '@mui/icons-material';
 
 const Nav = () => {
-  const {user, setUser} = useContext(MediaContext);
+  const {user, setUser, update} = useContext(MediaContext);
   const [open, setOpen] = useState(false);
   const {getUser} = useUser();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Nav = () => {
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [update]);
 
   return (
     <Box>
@@ -70,8 +70,7 @@ const Nav = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Search placeholder="Search" />
-
+      <Search placeholder="Search" sx={{marginTop: '1rem'}} />
       <Drawer
         open={open}
         onClose={() => {

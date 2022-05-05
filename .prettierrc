@@ -4,5 +4,5 @@
   "tabWidth": 2,
   "useTabs": false,
   "bracketSpacing": false,
-  "endOfLine": "lf"
+  "endOfLine": "auto"
 }
