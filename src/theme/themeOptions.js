@@ -18,12 +18,12 @@ const themeOptions = {
     },
   },
   typography: {
-    fontFamily: 'Lato',
+    fontFamily: 'Arial',
     body1: {
-      fontFamily: 'Droid Sans',
+      fontFamily: 'Arial',
     },
     body2: {
-      fontFamily: 'Droid Sans',
+      fontFamily: 'Arial',
     },
   },
   shape: {

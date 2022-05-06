@@ -226,7 +226,7 @@ const Single = () => {
             alt={file.title}
             sx={{
               width: '50%',
-              margin: 'auto',
+              margin: '1rem auto 1rem auto',
               filter: `brightness(${filters.brightness}%)
           contrast(${filters.contrast}%)
           saturate(${filters.saturate}%)
